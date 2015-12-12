@@ -72,6 +72,12 @@ store.dispatcher$.next(action);
 
 ## Plans next
 
+Personally I think documentation is most important part of a library, and for making everyone's life easier. Bad documentation waste people's time.
+
+If you would like to help, besides code you can create even larger impact by writing up examples. Redux (and luna) is a simple idea. Let's make it easier for people to understand the concept and start doing things that they set-out to do asap.
+
+### Todo List
+
 - [] use immutable in the test instead. Current form is too sloppy!
 - [] more testing cases with complicated stores
 - better store life-cycle support
