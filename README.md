@@ -6,6 +6,14 @@ Redux is awesome. Here we want to use the reactive-extention (Rxjs) to make it e
 
 ## How to use Luna
 
+first run 
+
+```shell
+npm install
+```
+
+and then to run a test you can use `karma run`. I use webstorm's karma integration to run the tests.
+
 ```typescript
 /** Created by ge on 12/6/15. */
 import {Action, Hash, Reducer} from "luna";
