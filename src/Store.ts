@@ -7,8 +7,7 @@ const INIT_STORE = 'INIT_STORE';
 export class Store<TState extends Hash> {
     public state$:BehaviorSubject<TState>;
     public rootReducer:Reducer;
-    private dispatcher$:Subject<Action<TState>>;
-    //private reporter:Subscriber<TState>;
+    public dispatcher$:Subject<Action<TState>>;
 
     constructor(rootReducer:Reducer,
                 initialState?:TState,
@@ -24,16 +23,16 @@ export class Store<TState extends Hash> {
             type: INIT_STORE,
             state: initialState
         };
-        // BehaviorSubject should be a stream of states.
+        // dispatcher$ is a stream for action objects
         this.dispatcher$ = new BehaviorSubject(initAction);
+        // state$ is a stream for the states of the store
         this.state$ = new BehaviorSubject(initialState);
-        var that = this;
         this.dispatcher$
             .subscribe(
                 (action) => {
                     var currentState:TState = this.state$.getValue();
-                    var state:TState = that.rootReducer(currentState, action, (state)=>this.state$.next(state));
-                    if (typeof state !== "undefined") that.state$.next(state);
+                    var state:TState = this.rootReducer(currentState, action, (state)=>this.state$.next(state));
+                    if (typeof state !== "undefined") this.state$.next(state);
                 },
                 (error) => console.log('dispatcher$ error: ', error),
                 () => console.log('dispatcher$ completed')
@@ -44,7 +43,7 @@ export class Store<TState extends Hash> {
         this.dispatcher$.next(action);
     }
 
-    destroy =  ()=> {
+    destroy = ()=> {
         this.dispatcher$.complete();
         this.state$.complete();
     }

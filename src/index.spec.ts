@@ -112,7 +112,7 @@ describe("store", function () {
         store.dispatch({type: "ASYNC_INC"});
         store.dispatch({type: "ASYNC_DEC"});
         setTimeout(() => {
-                store.destroy()
-            }, 500);
+            store.destroy()
+        }, 500);
     });
 });
