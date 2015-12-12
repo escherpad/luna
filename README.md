@@ -78,8 +78,8 @@ If you would like to help, besides code you can create even larger impact by wri
 
 ### Todo List
 
-- [] use immutable in the test instead. Current form is too sloppy!
-- [] more testing cases with complicated stores
+- [ ] use immutable in the test instead. Current form is too sloppy!
+- [ ] more testing cases with complicated stores
 - better store life-cycle support
 
 ## Acknowledgement
