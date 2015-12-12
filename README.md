@@ -70,9 +70,9 @@ store.dispatcher$.next(action);
 
 ## Plans next
 
-- use immutable in the test instead. Current form is too sloppy!
+- [] use immutable in the test instead. Current form is too sloppy!
+- [] more testing cases with complicated stores
 - better store life-cycle support
-- more testing cases with complicated stores
 
 ## Acknowledgement
 
