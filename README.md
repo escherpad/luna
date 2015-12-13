@@ -1,6 +1,6 @@
 # Luna, a reactive redux library supporting async reducers
 
-[![Join the chat at https://gitter.im/escherpad/luna](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/escherpad/luna?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/escherpad/luna](https://badges.gitter.im/Join%20Chat.svg?style=flat-square)](https://gitter.im/escherpad/luna?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Redux is awesome. Here we want to use the reactive-extention (Rxjs) to make it even more awesome.
 
