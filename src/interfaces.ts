@@ -7,7 +7,7 @@ export interface Action<TState> {
 }
 
 export interface Hash {
-    [key:string]: any;
+    [key:string]:any;
 }
 
 export interface Reducer {

@@ -3,8 +3,9 @@ import {BehaviorSubject, Subject, Subscriber} from "rxjs";
 import {combineReducers} from './util/combineReducers';
 import {Action, Reducer, Hash} from "./interfaces";
 
+
 const INIT_STORE = 'INIT_STORE';
-export class Store<TState extends Hash> {
+export class Store<TState> {
     public state$:BehaviorSubject<TState>;
     public rootReducer:Reducer;
     public dispatcher$:Subject<Action<TState>>;

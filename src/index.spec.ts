@@ -8,29 +8,22 @@ var expect = chai.expect;
 import {Action, Hash, Reducer} from "./index";
 
 // the Stat interface need to extend Hash so that the index keys are available.
-interface TestState extends Hash {
-    counter:number;
-}
 
-let reducer = <Reducer>function (state:TestState, action:Action<TestState>, callback:(state:TestState)=>void):TestState {
+let reducer = <Reducer>function (state:number, action:Action<number>, callback:(state:number)=>void):number {
     if (action.type === "INC") {
-        state.counter += 1;
-        return state
+        return state + 1;
     } else if (action.type === "DEC") {
-        state.counter -= 1;
-        return state
+        return state - 1;
     } else if (action.type === "ASYNC_INC") {
         console.log('adding right now ---------------');
         setTimeout(()=> {
             console.log('adding right now =================');
-            state.counter += 1;
-            callback(state);
+            callback(state + 1);
         }, 10);
         return undefined;
     } else if (action.type === "ASYNC_DEC") {
         setTimeout(()=> {
-            state.counter -= 1;
-            callback(state);
+            callback(state - 1);
         }, 10);
         return undefined;
     } else {
@@ -40,20 +33,20 @@ let reducer = <Reducer>function (state:TestState, action:Action<TestState>, call
 
 describe("interfaces", function () {
     it("Reducer can be a function", function () {
-        var state:TestState = {counter: 0};
-        expect(state.counter).to.equal(0);
+        var state:number = 0;
+        expect(state).to.equal(0);
         state = reducer(state, {type: "INC"});
-        expect(state.counter).to.equal(1);
+        expect(state).to.equal(1);
         state = reducer(state, {type: "DEC"});
-        expect(state.counter).to.equal(0);
+        expect(state).to.equal(0);
     });
     it("create store", function () {
-        var state:TestState = {counter: 0};
-        expect(state.counter).to.equal(0);
+        var state:number = 0;
+        expect(state).to.equal(0);
         state = reducer(state, {type: "INC"});
-        expect(state.counter).to.equal(1);
+        expect(state).to.equal(1);
         state = reducer(state, {type: "DEC"});
-        expect(state.counter).to.equal(0);
+        expect(state).to.equal(0);
     });
 });
 
@@ -66,8 +59,8 @@ describe("combineReducers", function () {
 import {Store} from "./index";
 describe("store", function () {
     it("sync reducers should work", function () {
-        var state:TestState = {counter: 10};
-        var store = new Store<TestState>(reducer, state);
+        var state:number = 10;
+        var store = new Store<number>(reducer, state);
         store.state$.subscribe(
             (state)=> {
                 console.log('spec state: ', state)
@@ -80,25 +73,25 @@ describe("store", function () {
         store.destroy();
     });
     it("async reducers also work", function (done:()=>void) {
-        var state:TestState = {counter: 20};
-        let reducer = <Reducer>function (state:TestState, action:Action<TestState>, callback:(state:TestState)=>void):TestState {
+        var state:number = 20;
+        let reducer = <Reducer>function (state:number, action:Action<number>, callback:(state:number)=>void):number {
             if (action.type === "ASYNC_INC") {
+                console.log('adding right now ---------------');
                 setTimeout(()=> {
-                    state.counter += 1;
-                    callback(state);
+                    console.log('adding right now =================');
+                    callback(state + 1);
                 }, 10);
                 return undefined;
             } else if (action.type === "ASYNC_DEC") {
                 setTimeout(()=> {
-                    state.counter -= 1;
-                    callback(state);
+                    callback(state - 1);
                 }, 10);
                 return undefined;
             } else {
                 return state;
             }
         };
-        var store = new Store<TestState>(reducer, state);
+        var store = new Store<number>(reducer, state);
         store.state$.subscribe(
             (state)=> {
                 console.log('spec state: ', state)

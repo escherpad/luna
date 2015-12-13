@@ -12,7 +12,7 @@ function pickReducer(reducers:Reducer):Reducer {
 
 
 // mixed reducer type is not supported, but I want to add them later on.
-export function combineReducers<TState extends Hash>(reducers:Reducer|Reducer):Reducer {
+export function combineReducers<TState>(reducers:Reducer):Reducer {
     const finalReducers:Reducer = pickReducer(reducers);
     const keys = Object.keys(finalReducers);
 
