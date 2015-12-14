@@ -7,6 +7,10 @@
     "example": "example",
     "test": "tests"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/escherpad/luna.git"
+  },
   "scripts": {
     "preTest": "tsc src/*.spec.ts --watch -m commonjs -t es5 --experimentalDecorators --emitDecoratorMetadata",
     "test": "mocha src/index.spec.js"
