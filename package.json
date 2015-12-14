@@ -27,7 +27,7 @@
   "author": "Ge Yang <yangge1987@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "rxjs": "^5.0.0-alpha.14",
+    "rxjs": "^5.0.0-alpha.14"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^0.15.9",
