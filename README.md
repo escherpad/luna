@@ -2,7 +2,8 @@
 
 [![Join the chat at https://gitter.im/escherpad/luna](https://img.shields.io/badge/GITTER-join%20chat-green.svg?style=flat-square)](https://gitter.im/escherpad/luna?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Redux is awesome. Here we want to use the reactive-extention (Rxjs) to make it even more awesome.
+Redux is awesome. Here we want to use the reactive-extention (Rxjs) to make it even more better. Current luna is 
+used at Escherpad with Angular2.
 
 ## How to use Luna
 
