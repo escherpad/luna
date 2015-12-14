@@ -2,7 +2,7 @@
   "name": "luna",
   "version": "1.0.0",
   "description": "a reactive redux-like store",
-  "main": "index.js",
+  "main": "src/index.ts",
   "directories": {
     "example": "example",
     "test": "tests"
