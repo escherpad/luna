@@ -8,7 +8,7 @@ const INIT_STORE = 'INIT_STORE';
 export class Store<TState> {
     public state$:BehaviorSubject<TState>;
     public rootReducer:Reducer;
-    public dispatcher$:Subject<Action<TState>>;
+    public action$:Subject<Action<TState>>;
 
     constructor(rootReducer:Reducer,
                 initialState?:TState,
@@ -25,10 +25,10 @@ export class Store<TState> {
             state: initialState
         };
         // dispatcher$ is a stream for action objects
-        this.dispatcher$ = new BehaviorSubject(initAction);
+        this.action$ = new BehaviorSubject(initAction);
         // state$ is a stream for the states of the store
         this.state$ = new BehaviorSubject(initialState);
-        this.dispatcher$
+        this.action$
             .subscribe(
                 (action) => {
                     var currentState:TState = this.state$.getValue();
@@ -41,11 +41,11 @@ export class Store<TState> {
     }
 
     dispatch(action:Action<TState>) {
-        this.dispatcher$.next(action);
+        this.action$.next(action);
     }
 
     destroy = ()=> {
-        this.dispatcher$.complete();
+        this.action$.complete();
         this.state$.complete();
     }
 }
