@@ -1,5 +1,5 @@
 /** Created by ge on 12/4/15. */
-import {BehaviorSubject, Subject, Subscriber} from "rxjs";
+import {BehaviorSubject, ReplaySubject, Subject, Subscriber} from "rxjs";
 import {combineReducers} from './util/combineReducers';
 import {Action, Reducer, Hash} from "./interfaces";
 
@@ -20,14 +20,13 @@ export class Store<TState> {
             this.rootReducer = rootReducer;
         }
 
-        var initAction:Action<TState> = {
-            type: INIT_STORE,
-            state: initialState
-        };
+        var initAction:Action<TState> = {type: INIT_STORE};
+        if (initialState) initAction.state = initialState;
+
         // dispatcher$ is a stream for action objects
         this.action$ = new BehaviorSubject(initAction);
         // state$ is a stream for the states of the store
-        this.state$ = new BehaviorSubject(initialState);
+        this.state$ = new BehaviorSubject<TState>(undefined);
         this.action$
             .subscribe(
                 (action) => {
@@ -37,10 +36,13 @@ export class Store<TState> {
                 },
                 (error) => console.log('dispatcher$ error: ', error),
                 () => console.log('dispatcher$ completed')
-            )
+            );
+
+        if (typeof initialState !== "undefined") this.dispatch(initAction);
     }
 
     dispatch(action:Action<TState>) {
+        if (action.type === INIT_STORE && typeof action.state !== "undefined") this.state$.next(action.state);
         this.action$.next(action);
     }
 

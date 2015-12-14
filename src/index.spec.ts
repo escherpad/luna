@@ -15,9 +15,7 @@ let reducer = <Reducer>function (state:number, action:Action<number>, callback:(
     } else if (action.type === "DEC") {
         return state - 1;
     } else if (action.type === "ASYNC_INC") {
-        console.log('adding right now ---------------');
         setTimeout(()=> {
-            console.log('adding right now =================');
             callback(state + 1);
         }, 10);
         return undefined;
@@ -76,9 +74,7 @@ describe("store", function () {
         var state:number = 20;
         let reducer = <Reducer>function (state:number, action:Action<number>, callback:(state:number)=>void):number {
             if (action.type === "ASYNC_INC") {
-                console.log('adding right now ---------------');
                 setTimeout(()=> {
-                    console.log('adding right now =================');
                     callback(state + 1);
                 }, 10);
                 return undefined;
