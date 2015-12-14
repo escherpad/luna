@@ -5,6 +5,11 @@
 Redux is awesome. Here we want to use the reactive-extention (Rxjs) to make it even more better. Current luna is 
 used at Escherpad with Angular2.
 
+## Features
+
+- support persistence to storage \[in progress\]
+- `action$` stream allow you to subscribe to all of the actions in a reactive-extention fashion
+
 ## How to use Luna
 
 first run 
