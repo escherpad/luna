@@ -1,9 +1,10 @@
 /** Created by ge on 12/4/15. */
 import {BehaviorSubject} from 'rxjs/subject/BehaviorSubject';
 import {Subject} from 'rxjs/Subject';
+import {Observable} from 'rxjs/Observable';
 import {Subscriber} from 'rxjs/Subscriber'
 import {combineReducers} from './util/combineReducers';
-import {Action, Thunk, Reducer, Hash} from "./interfaces";
+import {Action, Thunk, Reducer, Hash, IndexType} from "./interfaces";
 
 
 const INIT_STORE = 'INIT_STORE';
@@ -58,6 +59,15 @@ export class Store<TState> extends BehaviorSubject<TState> {
             if (_action.type === INIT_STORE && typeof _action.state !== "undefined") this.next(_action.state);
             this.action$.next(_action);
         }
+    }
+
+    select<TRState>(key: string): Observable<TRState> {
+        return this
+            .map((state:any) => {
+                var rState:TRState = state[key] as TRState;
+                return rState;
+            })
+            .distinctUntilChanged();
     }
 
     destroy = ()=> {
