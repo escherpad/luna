@@ -5,7 +5,7 @@
 Luna is a light functional model container inspired by redux written using the reactive extension (v5.0). Luna try to improve upon redux by providing out of the box Thunk support so that you can pass in `actionCreator`s and asynchronous action creators directly into the `store.dispatch` function.
 
 
-## What's different about Luna?
+## What's different about Luna (from redux)?
 
 - Luna is written using the reactive-extension, so that both the action and the states are streams.
 - Luna `dispatcher` support `actionCreator` and asynchronous actions out of the box
