@@ -6,11 +6,15 @@ export interface Action<TState> {
     $async?: boolean;
 }
 
+export interface Thunk<TState> {
+    (): Action<TState> ;
+}
+
 export interface Hash {
     [key:string]:any;
 }
 
 export interface Reducer {
-    <TState>(state:TState, action:Action<TState>, callback?:(state:TState)=>void ):TState;
+    <TState>(state:TState, action:Action<TState>, callback?:(state:TState)=>void):TState;
     [key:string]:Reducer;
 }

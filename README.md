@@ -1,21 +1,23 @@
-# Luna, a reactive redux library supporting async reducers
+# Luna, a reactive redux library supporting built-in async action creator and Thunks
 
 [![Join the chat at https://gitter.im/escherpad/luna](https://img.shields.io/badge/GITTER-join%20chat-green.svg?style=flat-square)](https://gitter.im/escherpad/luna?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Redux is awesome. Here we want to use the reactive-extention (Rxjs) to make it even more better. Current luna is 
-used at Escherpad with Angular2.
+Luna is a light functional model container inspired by redux written using the reactive extension (v5.0). Luna try to improve upon redux by providing out of the box Thunk support so that you can pass in `actionCreator`s and asynchronous action creators.
 
-## Features
 
-- support persistence to storage \[in progress\]
-- `action$` stream allow you to subscribe to all of the actions in a reactive-extention fashion
+## What's different about Luna?
+
+- Luna is written using the reactive-extension, so that both the action and the states are streams.
+- Luna `dispatcher` support `actionCreator` and asynchronous actions out of the box
+    - Luna's Thunks take no input arguments. The Store object is accessed as `this` keyword in the thunk. I'm experimenting with this as a cleaner syntax.
+- Luna is written for an Angular2 project, and will provide dependency injection (DI).
 
 ## How to use Luna
 
 first run 
 
 ```shell
-npm install
+npm install 
 ```
 
 and then to run a test you can use `karma run`. I use webstorm's karma integration to run the tests.

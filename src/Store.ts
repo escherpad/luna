@@ -1,7 +1,7 @@
 /** Created by ge on 12/4/15. */
 import {BehaviorSubject, ReplaySubject, Subject, Subscriber} from "rxjs";
 import {combineReducers} from './util/combineReducers';
-import {Action, Reducer, Hash} from "./interfaces";
+import {Action, Thunk, Reducer, Hash} from "./interfaces";
 
 
 const INIT_STORE = 'INIT_STORE';
@@ -41,9 +41,21 @@ export class Store<TState> {
         if (typeof initialState !== "undefined") this.dispatch(initAction);
     }
 
-    dispatch(action:Action<TState>) {
-        if (action.type === INIT_STORE && typeof action.state !== "undefined") this.state$.next(action.state);
-        this.action$.next(action);
+    dispatch(action: Action<TState>|Thunk<TState>) {
+        var _action: Action<TState>,
+            _actionThunk: Thunk<TState>,
+            newAction: Action<TState>;
+        if (typeof action === 'function') {
+            _actionThunk = action as Thunk<TState>;
+            newAction = _actionThunk.apply(this);
+            if (typeof newAction !== 'undefined') {
+                return this.action$.next(newAction);
+            }
+        } else {
+            _action = action as Action<TState>;
+            if (_action.type === INIT_STORE && typeof _action.state !== "undefined") this.state$.next(_action.state);
+            this.action$.next(_action);
+        }
     }
 
     destroy = ()=> {
