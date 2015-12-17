@@ -86,6 +86,73 @@ store.dispatcher$.next(action);
 
 ```
 
+## Luna's different signature for asynchronous actions
+
+Here is the syntax with redux-thunk:
+
+```typescript
+// But what do you do when you need to start an asynchronous action,
+// such as an API call, or a router transition?
+
+// Meet thunks.
+// A thunk is a function that returns a function.
+// This is a thunk.
+
+function makeASandwichWithSecretSauce(forPerson) {
+
+  // Invert control!
+  // Return a function that accepts `dispatch` so we can dispatch later.
+  // Thunk middleware knows how to turn thunk async actions into actions.
+
+  return function (dispatch) {
+    return fetchSecretSauce().then(
+      sauce => dispatch(makeASandwich(forPerson, sauce)),
+      error => dispatch(apologize('The Sandwich Shop', forPerson, error))
+    );
+  };
+}
+
+// Thunk middleware lets me dispatch thunk async actions
+// as if they were actions!
+
+store.dispatch(
+  makeASandwichWithSecretSauce('Me')
+);
+```
+
+The signature for the returned thunk has `dispatch` and `getValue`. I find this signature kind of arbitrary. Here with Luna, you can do:
+
+```typescript
+// But what do you do when you need to start an asynchronous action,
+// such as an API call, or a router transition?
+
+// Meet thunks.
+// A thunk is a function that returns a function.
+// This is a thunk.
+
+function makeASandwichWithSecretSauce(forPerson) {
+
+  // Invert control!
+  // Return a function that accepts `dispatch` so we can dispatch later.
+  // Thunk middleware knows how to turn thunk async actions into actions.
+
+  return function () {
+    var _store = this;
+    return fetchSecretSauce().then(
+      sauce => _store.dispatch(makeASandwich(forPerson, sauce)),
+      error => _store.dispatch(apologize('The Sandwich Shop', forPerson, error))
+    );
+  };
+}
+
+// Thunk middleware lets me dispatch thunk async actions
+// as if they were actions!
+
+store.dispatch(
+  makeASandwichWithSecretSauce('Me')
+);
+```
+
 ## Plans next
 
 Personally I think documentation is the most important part of a library, and for making everyone's life easier. Bad documentation wastes people's time.
