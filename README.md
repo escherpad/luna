@@ -17,7 +17,7 @@ Luna is a light functional model container inspired by redux written using the r
 first run 
 
 ```shell
-npm install 
+npm install luna@git+https://git@github.com/escherpad/luna.git 
 ```
 
 and then to run a test you can use `karma run`. I use webstorm's karma integration to run the tests.
