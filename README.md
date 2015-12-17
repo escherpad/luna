@@ -12,6 +12,12 @@ Luna is a light functional model container inspired by redux written using the r
     - Luna's Thunks take no input arguments. The Store object is accessed as `this` keyword in the thunk. I'm experimenting with this as a cleaner syntax.
 - Luna is written for an Angular2 project, and will provide dependency injection (DI).
 
+## Overview
+
+Luna store is a subclass of the BehaviorSubject from rx. It emits a stream of state objects that you can subscribe to. 
+
+the `store.action$` is a behavior subject for the actions. The store internally subscribes to this stream and executes the reducers on the store state in response to events from this action stream. 
+
 ## How to use Luna
 
 first run 
@@ -20,7 +26,7 @@ first run
 npm install luna@git+https://git@github.com/escherpad/luna.git 
 ```
 
-and then to run a test you can use `karma run`. I use webstorm's karma integration to run the tests.
+and then to run a test you can use `karma run`. I use webStorm's karma integration to run the tests.
 
 ```typescript
 /** Created by ge on 12/6/15. */
@@ -67,7 +73,7 @@ var state:TestState = {
 var store = new Store<TestState>(reducer, state);
 
 // stream states to view
-store.state$.subscribe(
+store.subscribe(
     (state)=> {
         console.log('spec state: ', state)
     },

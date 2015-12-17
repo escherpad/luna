@@ -59,7 +59,7 @@ describe("store", function () {
     it("sync reducers should work", function () {
         var state:number = 10;
         var store = new Store<number>(reducer, state);
-        store.state$.subscribe(
+        store.subscribe(
             (state)=> {
                 console.log('spec state: ', state)
             },
@@ -88,7 +88,7 @@ describe("store", function () {
             }
         };
         var store = new Store<number>(reducer, state);
-        store.state$.subscribe(
+        store.subscribe(
             (state)=> {
                 console.log('spec state: ', state)
             },
@@ -117,7 +117,7 @@ describe("dispatch function", function () {
             };
         }
 
-        store.state$.subscribe(
+        store.subscribe(
             (state)=> {
                 console.log('spec state: ', state)
             },
@@ -138,7 +138,7 @@ describe("dispatch function", function () {
             };
         }
 
-        store.state$.subscribe(
+        store.subscribe(
             (state)=> {
                 console.log('spec state: ', state)
             },
@@ -163,7 +163,7 @@ describe("dispatch function", function () {
             }, 200);
         }
 
-        store.state$.subscribe(
+        store.subscribe(
             (state)=> {
                 console.log('spec state: ', state)
             },
