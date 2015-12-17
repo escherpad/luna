@@ -7,7 +7,7 @@ export interface Action<TState> {
 }
 
 export interface Thunk<TState> {
-    (): Action<TState> ;
+    (): Action<TState> | void ;
 }
 
 export interface Hash {

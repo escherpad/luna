@@ -105,3 +105,74 @@ describe("store", function () {
         }, 500);
     });
 });
+describe("dispatch function", function () {
+
+    it("support action creator", function () {
+        var state:number = 30;
+        var store = new Store<number>(reducer, state);
+
+        function increase():Action<number> {
+            return {
+                type: "INC"
+            };
+        }
+
+        store.state$.subscribe(
+            (state)=> {
+                console.log('spec state: ', state)
+            },
+            error=> console.log('error ', error),
+            () => console.log('completed.')
+        );
+        store.dispatch(increase());
+        store.dispatch({type: "DEC"});
+        store.destroy();
+    });
+    it("support passing in thunk", function () {
+        var state:number = 40;
+        var store = new Store<number>(reducer, state);
+
+        function increase():Action<number> {
+            return {
+                type: "INC"
+            };
+        }
+
+        store.state$.subscribe(
+            (state)=> {
+                console.log('spec state: ', state)
+            },
+            error=> console.log('error ', error),
+            () => console.log('completed.')
+        );
+        store.dispatch(increase);
+        store.dispatch({type: "DEC"});
+        store.destroy();
+    })
+    it("support passing in thunk, and thunk have access to dispatch", function () {
+        var state:number = 40;
+        var store = new Store<number>(reducer, state);
+
+        function increase():void {
+            var _store:Store<number> = this;
+            setTimeout(function ():void {
+                var action:Action<number> = {
+                        type: "INC"
+                    };
+                _store.dispatch(action)
+            }, 200);
+        }
+
+        store.state$.subscribe(
+            (state)=> {
+                console.log('spec state: ', state)
+            },
+            error=> console.log('error ', error),
+            () => console.log('completed.')
+        );
+        store.dispatch(increase);
+        store.dispatch({type: "DEC"});
+        store.destroy();
+    })
+
+});
