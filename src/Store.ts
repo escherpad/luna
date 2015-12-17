@@ -4,7 +4,7 @@ import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import {Subscriber} from 'rxjs/Subscriber'
 import {combineReducers} from './util/combineReducers';
-import {Action, Thunk, Reducer, Hash, IndexType} from "./interfaces";
+import {Action, Thunk, Reducer, Hash} from "./interfaces";
 
 
 const INIT_STORE = 'INIT_STORE';
@@ -12,16 +12,16 @@ export class Store<TState> extends BehaviorSubject<TState> {
     public rootReducer:Reducer;
     public action$:Subject<Action<TState>>;
 
-    constructor(rootReducer:Reducer,
+    constructor(rootReducer:Reducer | Hash<Reducer>,
                 initialState?:TState,
                 noMergeReducer:boolean = false) {
         // this is a stream for the states of the store, call BehaviorSubject constructor
         super(undefined);
 
-        if (!noMergeReducer && typeof rootReducer !== 'function') {
-            this.rootReducer = combineReducers<TState>(rootReducer);
+        if (typeof rootReducer !== 'function' && !noMergeReducer) {
+            this.rootReducer = combineReducers<TState>(rootReducer as Hash<Reducer>);
         } else {
-            this.rootReducer = rootReducer;
+            this.rootReducer = rootReducer as Reducer;
         }
 
         var initAction:Action<TState> = {type: INIT_STORE};

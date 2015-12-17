@@ -157,8 +157,8 @@ describe("dispatch function", function () {
             var _store:Store<number> = this;
             setTimeout(function ():void {
                 var action:Action<number> = {
-                        type: "INC"
-                    };
+                    type: "INC"
+                };
                 _store.dispatch(action)
             }, 200);
         }
@@ -176,3 +176,50 @@ describe("dispatch function", function () {
     })
 
 });
+describe("store with hash type", function () {
+    it("can accept actions", function () {
+        interface TState extends Hash<number> {
+        }
+        var state:TState = {
+            counter: 40
+        };
+
+        let reducer = <Reducer>function <Number>(state:number, action:Action<TState>):number {
+            if (action.type === "INC") {
+                return state + 1;
+            } else if (action.type === "DEC") {
+                return state - 1;
+            } else {
+                return state;
+            }
+        };
+        var rootReducer:Hash<Reducer> = {
+            counter: reducer
+        };
+
+        var store = new Store<TState>(rootReducer, state);
+
+        function increase():void {
+            var _store:Store<TState> = this;
+            setTimeout(function ():void {
+                var action:Action<TState> = {
+                    type: "INC"
+                };
+                _store.dispatch(action)
+            }, 200);
+        }
+
+        store.subscribe(
+            (state)=> {
+                console.log('spec state: ', state)
+            },
+            error=> console.log('error ', error),
+            () => console.log('completed.')
+        );
+        store.dispatch(increase);
+        store.dispatch({type: "DEC"});
+        store.destroy();
+
+    })
+
+})

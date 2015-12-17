@@ -10,15 +10,10 @@ export interface Thunk<TState> {
     (): Action<TState> | void ;
 }
 
-export interface Hash {
-    [key:string]:any;
-}
-
-export interface IndexType<T> {
-    [key:string]:T
+export interface Hash<TS> {
+    [key:string]:TS;
 }
 
 export interface Reducer {
     <TState>(state:TState, action:Action<TState>, callback?:(state:TState)=>void):TState;
-    [key:string]:Reducer;
 }
