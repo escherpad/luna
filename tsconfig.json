@@ -15,7 +15,7 @@
     "src/interfaces.ts",
     "src/Store.ts",
     "src/createStore.ts",
-    "src/storeProvider.ts",
+    "src/provideStore.ts",
     "src/index.spec.ts"
   ],
   "exclude": [

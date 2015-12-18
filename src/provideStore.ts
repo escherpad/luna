@@ -1,5 +1,5 @@
 /** Created by ge on 12/17/15. */
-import {Reducer} from "./interfaces";
+import {Reducer, Hash} from "./interfaces";
 import {Store} from "./Store";
 import {createStore} from "./createStore";
 
@@ -7,7 +7,7 @@ import {createStore} from "./createStore";
 import "reflect-metadata";
 import {provide} from "angular2/core";
 
-export function provideStore<TState>(reducer:Reducer, initialState:TState):any[] {
+export function provideStore<TState>(reducer:Reducer | Hash<Reducer>, initialState:TState):any[] {
     return [
         provide(Store, {useFactory: createStore(reducer, initialState)})
     ]
