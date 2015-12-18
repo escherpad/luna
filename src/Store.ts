@@ -15,7 +15,7 @@ export class Store<TState> extends BehaviorSubject<TState> {
         super(passOrCombineReducers(rootReducer)(initialState, {type: INIT_STORE}));
         this.rootReducer = passOrCombineReducers(rootReducer);
 
-        // dispatcher$ is a stream for action objects
+        // action$ is a stream for action objects
         this.action$ = new Subject();
         this.action$
             .subscribe(
