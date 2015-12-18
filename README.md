@@ -4,7 +4,7 @@
 
 Luna is a light functional model container inspired by redux written with the Reactive-Extension (Rxjs@v5.0-beta). Luna try to improve upon redux by providing out of the box support for async actions, ways to access child components of the root store as a stream and more. Luna drops verbatim compatibility with the original `redux` to give rise to a more coherent, reactive API.
 
-## Wanna use Reactive-Extention (Rxjs) and redux, but no idea how?
+## Wanna use Reactive-Extention (Rxjs) and redux in your project, but don't know how?
 
 Luna is the easiest way to get started. 
 
