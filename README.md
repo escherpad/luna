@@ -2,7 +2,7 @@
 
 [![Join the chat at https://gitter.im/escherpad/luna](https://img.shields.io/badge/GITTER-join%20chat-green.svg?style=flat-square)](https://gitter.im/escherpad/luna?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Luna is a light functional model container inspired by redux written using the reactive extension (v5.0). Luna try to improve upon redux by providing out of the box Thunk support so that you can pass in `actionCreator`s and asynchronous action creators directly into the `store.dispatch` function.
+Luna is a light functional model container inspired by redux written with the Reactive-Extension (Rxjs@v5.0-beta). Luna try to improve upon redux by providing out of the box support for async actions, ways to access child components of the root store as a stream and more. Luna drops verbatim compatibility with the original `redux` to give rise to a more coherent, reactive API.
 
 ## Wanna use Reactive-Extention (Rxjs) and redux, but no idea how?
 
