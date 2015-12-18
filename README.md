@@ -76,7 +76,7 @@ and I personally find this very powerful!
 - Luna is written using the reactive-extension, so that both the action and the states are streams.
 - Luna `dispatcher` support `actionCreator` and asynchronous actions out of the box
     - Luna's Thunks take no input arguments. The Store object is accessed as `this` keyword in the thunk. I'm experimenting with this as a cleaner syntax.
-- Luna is written for an Angular2 project, and provide dependency injection (DI).
+- Luna is written for an Angular2 project, and provide dependency injection (DI) via 'provideStore' function.
 
 ## Overview
 
