@@ -10,7 +10,7 @@ Luna is the easiest way to get started.
 
 Redux is a very simple library with a small API footprint. It is written without taking advantage of the Reactive-Extension. Now using Rxjs as the message/middleware layer, we make redux even more powerful and natural to use. Luna is written with redux's spirit and design pattern in mind, but it includes all of the different parts in one place, and make it easy to start developing in a redux-like way right away. Luna replaces `redux`, `redux-thunk`, `redux-middleware`, and allows you to use asynchronous `actionCreators` directly in the dispatcher.
 
-### Start by Designing Your Store 
+### Start by Designing Your Store Tree
 
 For an application, Redux provides a single data store for the entire application. To architect your app, you first start with designing the structure of the store object. Then you can write reducers for those sub-part of the root store, and use the `combineReducer` function to combine those into the root reducer. 
 
