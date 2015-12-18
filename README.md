@@ -1,4 +1,4 @@
-# Luna, a reactive redux library supporting built-in async action creator and Thunks
+# Luna, a reactive redux library with built-in support for async action creator and Thunks
 
 [![Join the chat at https://gitter.im/escherpad/luna](https://img.shields.io/badge/GITTER-join%20chat-green.svg?style=flat-square)](https://gitter.im/escherpad/luna?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
