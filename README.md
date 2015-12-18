@@ -4,13 +4,69 @@
 
 Luna is a light functional model container inspired by redux written using the reactive extension (v5.0). Luna try to improve upon redux by providing out of the box Thunk support so that you can pass in `actionCreator`s and asynchronous action creators directly into the `store.dispatch` function.
 
+## Wanna use Reactive-Extention (Rxjs) and redux, but no idea how?
 
-## What's different about Luna (from redux)?
+Luna is the easiest way to get started. 
+
+Redux is a very simple library with a small API footprint. It is written without taking advantage of the Reactive-Extension. Now using Rxjs as the message/middleware layer, we make redux even more powerful and natural to use. Luna is written with redux's spirit and design pattern in mind, but it includes all of the different parts in one place, and make it easy to start developing in a redux-like way right away. Luna replaces `redux`, `redux-thunk`, `redux-middleware`, and allows you to use `actionCreators` directly in the dispatcher.
+
+For an application, Redux provides a single data store for the entire application. To architect your app, you first start with designing the structure of the store object. Then you can write reducers for those sub-part of the root store, and use the `combineReducer` function to combine those into the root reducer. 
+
+To deal with arrays (collections of documents for instance), you use the array composition pattern. Adam has a very nice vieo on Egghead.io \([link](https://egghead.io/lessons/javascript-redux-reducer-composition-with-arrays)\)
+
+Another useful patter is action creators. You write a simple function that returns an action object. \([link: action creators](https://egghead.io/lessons/javascript-redux-extracting-action-creators)\)
+
+Now what about async operations such as network calls? Redux thinks that the `store` object should only be mutated synchronously. This makes everything easier to understand and sequential. To allow async operations, you then rely on a function concept called 'thunk'. Basically in simple words, because action objects are not enough, you dispatch functions that contains a certain execution context. With redux you need to use the `redux-thunk` middleware. It patches the redux `store` class, and makes the dispatch method accept `thunks`. This sytanx is slightly strange, so with Luna I decided to support dispatching `thunks` out of the box and avoid the monkey patching.
+
+### middlewares
+
+You don't need middleware anymore. The luna `Store` is a subclass of the `Rxjs` `BehaviorSubject`. It also have a property called `Store.action$`, which is a Subject for all of the actions the store accepts. As a result, if you want to log all of the actions, you can just subscribe to the `Store.action$` stream.
+
+### Persistent Storage and Store Childs
+
+Luna also provides a convenient method called `Store.select`. It allows you to pass in the key of a child of the root store object, and returns a stream for that child part of the model. 
+
+Therefore, if you have an app, and you want to save only part of the app state in the localStorage, you can just do the following:
+
+```typescript
+interface State {
+    loginSession: User,
+    notes: Note[],
+    otherData: Blah...
+}
+
+const rootReducer:State = {
+    loginSession: loginSessionReducer,
+    notes: notesReducer,
+    ...
+}
+
+const initialState = {
+    loginSession: [],
+    notes: [],
+    ...
+}
+
+var store = new Store(rootReducer, intialState);
+
+// To save the loginSession in the localStorage of the 
+// browser, you can just subscribe like this:
+
+store
+    .select('loginSession')
+    .map(loginSession => {
+        window.localStorage.setItem('loginSession', loginSession);
+    })
+```
+
+and I personally find this very powerful!
+
+## About this library and What's different about Luna (from redux)?
 
 - Luna is written using the reactive-extension, so that both the action and the states are streams.
 - Luna `dispatcher` support `actionCreator` and asynchronous actions out of the box
     - Luna's Thunks take no input arguments. The Store object is accessed as `this` keyword in the thunk. I'm experimenting with this as a cleaner syntax.
-- Luna is written for an Angular2 project, and will provide dependency injection (DI).
+- Luna is written for an Angular2 project, and provide dependency injection (DI).
 
 ## Overview
 
