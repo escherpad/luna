@@ -16,7 +16,7 @@ For an application, Redux provides a single data store for the entire applicatio
 
 ### `map =>` Array Composition Pattern
 
-To deal with arrays (collections of documents for instance), you use the array composition pattern. Adam has a very nice vieo on Egghead.io \([link](https://egghead.io/lessons/javascript-redux-reducer-composition-with-arrays)\)
+To deal with arrays (collections of documents for instance), you use the array composition pattern. Dan has a very nice vieo on Egghead.io \([link](https://egghead.io/lessons/javascript-redux-reducer-composition-with-arrays)\)
 
 
 ### `()=>` Action Creator Pattern
