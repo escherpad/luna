@@ -67,7 +67,7 @@ store
         window.localStorage.setItem('loginSession', loginSession);
     })
 ```
-example here: [line in test file]()
+example here: [line in test file](https://github.com/escherpad/luna/commit/e0741cc4ca8af2ad4d3a38e08c5681838f342ed4#diff-6b623d6bcf5e7f06c466aa060ec9c4b6R279)
 
 and I personally find this very powerful!
 
