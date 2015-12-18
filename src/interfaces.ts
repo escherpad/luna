@@ -2,8 +2,6 @@
 export interface Action<TState> {
     type: string;
     state?:TState;
-    $sync?: boolean;
-    $async?: boolean;
 }
 
 export interface Thunk<TState> {

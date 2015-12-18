@@ -18,25 +18,34 @@ export function combineReducers<TState>(reducers:Hash<Reducer>):Reducer {
     const finalReducers:Hash<Reducer> = pickReducers<Reducer>(reducers);
     const keys = Object.keys(finalReducers);
 
-    var combinedReducer = <TState extends Hash<any>>(state:TState, action:Action<TState>, callback?:(state:TState)=>void) => {
+    var combinedReducer = <TState extends Hash<any>>(state:TState, action:Action<TState>) => {
         var hasChanged:boolean = false;
-        var initialState = {} as TState;
-        var finalState:TState = keys.reduce((state:TState, key:string):TState => {
-            var previousStateForKey:any = state[key];
+        var finalState:TState = keys.reduce((_state:TState, key:string):TState => {
+            var nextState:TState;
+            var previousStateForKey:any = _state[key];
             var nextStateForKey:any = finalReducers[key](
-                state[key],
-                action,
-                (_state) => {
-                    // call back is not called unless the inner reducer calls it.
-                    state[key] = _state;
-                    callback(_state);
-                }
+                _state[key],
+                action
             );
             hasChanged = hasChanged || previousStateForKey !== nextStateForKey;
-            return nextStateForKey;
-        }, initialState);
+            if (!hasChanged) {
+                return _state;
+            } else {
+                nextState = Object.assign({}, _state);
+                nextState[key] = nextStateForKey;
+                return nextState;
+            }
+        }, state);
 
         return hasChanged ? finalState : state;
     };
     return combinedReducer as Reducer;
+}
+
+export function passOrCombineReducers<TState>(reducers:Reducer|Hash<Reducer>):Reducer {
+    if (typeof reducers !== 'function') {
+        return combineReducers<TState>(reducers as Hash<Reducer>);
+    } else {
+        return reducers as Reducer;
+    }
 }

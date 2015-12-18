@@ -70,40 +70,6 @@ describe("store", function () {
         store.dispatch({type: "DEC"});
         store.destroy();
     });
-    it("async reducers also work", function (done:()=>void) {
-        var state:number = 20;
-        let reducer = <Reducer>function (state:number, action:Action<number>, callback:(state:number)=>void):number {
-            if (action.type === "ASYNC_INC") {
-                setTimeout(()=> {
-                    callback(state + 1);
-                }, 10);
-                return undefined;
-            } else if (action.type === "ASYNC_DEC") {
-                setTimeout(()=> {
-                    callback(state - 1);
-                }, 10);
-                return undefined;
-            } else {
-                return state;
-            }
-        };
-        var store = new Store<number>(reducer, state);
-        store.subscribe(
-            (state)=> {
-                console.log('spec state: ', state)
-            },
-            error=> console.log('error ', error),
-            () => {
-                console.log('completed.');
-                done();
-            }
-        );
-        store.dispatch({type: "ASYNC_INC"});
-        store.dispatch({type: "ASYNC_DEC"});
-        setTimeout(() => {
-            store.destroy()
-        }, 500);
-    });
 });
 describe("dispatch function", function () {
 
@@ -219,7 +185,53 @@ describe("store with hash type", function () {
         store.dispatch(increase);
         store.dispatch({type: "DEC"});
         store.destroy();
+    });
+    it("accept reducers of different types", function () {
+        interface TState {
+            counter: number;
+            name: string;
+        }
+        var state:TState = {
+            counter: 40,
+            name: 'Captain Kirk'
+        };
 
+        let counterReducer = <Reducer>function <Number>(state:number, action:Action<TState>):number {
+            if (action.type === "INC") {
+                return state + 1;
+            } else if (action.type === "DEC") {
+                return state - 1;
+            } else {
+                return state;
+            }
+        };
+        let stringReducer = <Reducer>function <String>(state:string, action:Action<TState>):string {
+            if (action.type === "CAPITALIZE") {
+                return state.toUpperCase();
+            } else if (action.type === "LOWERING") {
+                return state.toLowerCase();
+            } else {
+                return state;
+            }
+        };
+        var rootReducer:Hash<Reducer> = {
+            counter: counterReducer,
+            name: stringReducer
+        };
+
+        var store = new Store<TState>(rootReducer, state);
+
+        store.subscribe(
+            (state)=> {
+                console.log('spec state: ', state)
+            },
+            error=> console.log('error ', error),
+            () => console.log('completed.')
+        );
+        store.dispatch({type: "CAPITALIZE"});
+        store.dispatch({type: "LOWERING"});
+        store.dispatch({type: "INC"});
+        store.destroy();
     })
 
-})
+});
