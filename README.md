@@ -14,16 +14,16 @@ Redux is a very simple library with a small API footprint. It is written without
 
 For an application, Redux provides a single data store for the entire application. To architect your app, you first start with designing the structure of the store object. Then you can write reducers for those sub-part of the root store, and use the `combineReducer` function to combine those into the root reducer. 
 
-### map => Array Composition Pattern
+### `map =>` Array Composition Pattern
 
 To deal with arrays (collections of documents for instance), you use the array composition pattern. Adam has a very nice vieo on Egghead.io \([link](https://egghead.io/lessons/javascript-redux-reducer-composition-with-arrays)\)
 
 
-### \(\)=> Action Creator Pattern
+### `()=>` Action Creator Pattern
 
 Another useful patter is action creators. You write a simple function that returns an action object. \([link: action creators](https://egghead.io/lessons/javascript-redux-extracting-action-creators)\)
 
-### Thunk and Async Actions
+### `Thunk` and Async Actions
 
 Now what about async operations such as network calls? Redux thinks that the `store` object should only be mutated synchronously. This makes everything easier to understand and sequential. To allow async operations, you then rely on a function concept called 'thunk'. In simple words, because action objects are not enough, you dispatch functions that contains a certain execution context. With redux you need to use the `redux-thunk` middleware. It patches the redux `store` class, and makes the dispatch method accept `thunks`. This sytanx is slightly strange, so with Luna I decided to support dispatching `thunks` out of the box and avoid the monkey patching.
 
