@@ -63,7 +63,7 @@ var store = new Store(rootReducer, intialState);
 
 store
     .select('loginSession')
-    .subscript(loginSession => {
+    .subscribe(loginSession => {
         window.localStorage.setItem('loginSession', loginSession);
     })
 ```
