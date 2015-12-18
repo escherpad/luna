@@ -44,13 +44,13 @@ interface State {
     otherData: Blah...
 }
 
-const rootReducer:State = {
+const rootReducer:Reducer<State> = {
     loginSession: loginSessionReducer,
     notes: notesReducer,
     ...
 }
 
-const initialState = {
+const initialState:State = {
     loginSession: [],
     notes: [],
     ...
