@@ -7,7 +7,7 @@ webpackConfig.stats = { colors: true, reasons: true };
 module.exports = function (config) {
     config.set({
         basePath: '',
-        frameworks: ['mocha', 'chai'],
+        frameworks: ['jasmine'],
         files: [
             'src/*.spec.ts'
         ],

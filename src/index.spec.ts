@@ -1,8 +1,5 @@
-///<reference path="../typings/mocha/mocha.d.ts"/>
-///<reference path="../typings/chai/chai.d.ts"/>
-
-import chai = require('chai');
-var expect = chai.expect;
+declare var describe:any, it:any, expect:any, console:any, require:any;
+require('es6-shim');
 
 /** Created by ge on 12/6/15. */
 import {Action, Hash, Reducer} from "./index";
@@ -32,19 +29,19 @@ let reducer = <Reducer>function (state:number, action:Action<number>, callback:(
 describe("interfaces", function () {
     it("Reducer can be a function", function () {
         var state:number = 0;
-        expect(state).to.equal(0);
+        expect(state).toBe(0);
         state = reducer(state, {type: "INC"});
-        expect(state).to.equal(1);
+        expect(state).toBe(1);
         state = reducer(state, {type: "DEC"});
-        expect(state).to.equal(0);
+        expect(state).toBe(0);
     });
     it("create store", function () {
         var state:number = 0;
-        expect(state).to.equal(0);
+        expect(state).toBe(0);
         state = reducer(state, {type: "INC"});
-        expect(state).to.equal(1);
+        expect(state).toBe(1);
         state = reducer(state, {type: "DEC"});
-        expect(state).to.equal(0);
+        expect(state).toBe(0);
     });
 });
 
