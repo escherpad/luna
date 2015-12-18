@@ -1,8 +1,5 @@
 /** Created by ge on 12/4/15. */
-import {BehaviorSubject} from 'rxjs/subject/BehaviorSubject';
-import {Subject} from 'rxjs/Subject';
-import {Observable} from 'rxjs/Observable';
-import {Subscriber} from 'rxjs/Subscriber'
+import {Subject, BehaviorSubject, Observable} from 'rxjs';
 import {passOrCombineReducers} from './util/combineReducers';
 import {Action, Thunk, Reducer, Hash} from "./interfaces";
 
@@ -50,14 +47,13 @@ export class Store<TState> extends BehaviorSubject<TState> {
         }
     }
 
-    select<TRState>(key:string):Observable<TRState> {
+    select = <TRState>(key:string):Observable<TRState> => {
         return this
             .map((state:any) => {
                 var rState:TRState = state[key] as TRState;
                 return rState;
-            })
-            .distinctUntilChanged();
-    }
+            });
+    };
 
     destroy = ()=> {
         this.action$.complete();

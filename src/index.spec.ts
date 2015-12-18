@@ -232,6 +232,53 @@ describe("store with hash type", function () {
         store.dispatch({type: "LOWERING"});
         store.dispatch({type: "INC"});
         store.destroy();
+    });
+    it("should allow filtered partial states in a stream", function(){
+        interface TState {
+            counter: number;
+            name: string;
+        }
+        var state:TState = {
+            counter: 40,
+            name: 'Captain Kirk'
+        };
+
+        let counterReducer = <Reducer>function <Number>(state:number, action:Action<TState>):number {
+            if (action.type === "INC") {
+                return state + 1;
+            } else if (action.type === "DEC") {
+                return state - 1;
+            } else {
+                return state;
+            }
+        };
+        let stringReducer = <Reducer>function <String>(state:string, action:Action<TState>):string {
+            if (action.type === "CAPITALIZE") {
+                return state.toUpperCase();
+            } else if (action.type === "LOWERING") {
+                return state.toLowerCase();
+            } else {
+                return state;
+            }
+        };
+        var rootReducer:Hash<Reducer> = {
+            counter: counterReducer,
+            name: stringReducer
+        };
+
+        var store = new Store<TState>(rootReducer, state);
+
+        store.select('name').subscribe(
+            (state)=> {
+                console.log('spec state: ', state)
+            },
+            error=> console.log('error ', error),
+            () => console.log('completed.')
+        );
+        store.dispatch({type: "CAPITALIZE"});
+        store.dispatch({type: "LOWERING"});
+        store.dispatch({type: "INC"});
+        store.destroy();
     })
 
 });
