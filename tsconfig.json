@@ -10,6 +10,10 @@
     "rootDir": "./",
     "sourceMap": true
   },
+  "files": [
+    "src/index.ts",
+    "src/index.spec.ts"
+  ],
   "exclude": [
     "node_modules"
   ]

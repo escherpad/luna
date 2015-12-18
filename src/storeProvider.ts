@@ -7,8 +7,8 @@ import {createStore} from "./createStore";
 import "reflect-metadata";
 import {provide} from "angular2/core";
 
-export function storeProvider <TState>(reducer:Reducer, initialState:TState):Store<TState> {
+export function storeProvider <TState>(reducer:Reducer, initialState:TState):any[] {
     return [
-        provide(Store, {useFactor: createStore(reducer, initialState)})
+        provide(Store, {useFactory: createStore(reducer, initialState)})
     ]
 }
