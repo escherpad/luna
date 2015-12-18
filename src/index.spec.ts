@@ -272,9 +272,17 @@ describe("store with hash type", function () {
             error=> console.log('error ', error),
             () => console.log('completed.')
         );
+
+        // mock persistent storage example
+        store
+            .select('counter')
+            .subscribe((count:number):void => console.log('counter saving event: ', count));
+
         store.dispatch({type: "CAPITALIZE"});
         store.dispatch({type: "LOWERING"});
         store.dispatch({type: "INC"});
+        store.dispatch({type: "DEC"});
+
         store.destroy();
     })
 

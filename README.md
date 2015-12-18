@@ -63,10 +63,11 @@ var store = new Store(rootReducer, intialState);
 
 store
     .select('loginSession')
-    .map(loginSession => {
+    .subscript(loginSession => {
         window.localStorage.setItem('loginSession', loginSession);
     })
 ```
+example here: [line in test file]()
 
 and I personally find this very powerful!
 
