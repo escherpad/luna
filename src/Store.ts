@@ -10,8 +10,7 @@ export class Store<TState> extends BehaviorSubject<TState> {
     public action$:Subject<Action<TState>>;
 
     constructor(rootReducer:Reducer | Hash<Reducer>,
-                initialState:TState,
-                noMergeReducer:boolean = false) {
+                initialState:TState) {
         // this is a stream for the states of the store, call BehaviorSubject constructor
         super(passOrCombineReducers(rootReducer)(initialState, {type: INIT_STORE}));
         this.rootReducer = passOrCombineReducers(rootReducer);

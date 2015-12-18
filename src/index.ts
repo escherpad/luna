@@ -2,3 +2,5 @@
 export * from "./interfaces";
 export * from "./util/combineReducers";
 export * from "./Store";
+export * from "./createStore";
+//export * from "./storeProvider";
