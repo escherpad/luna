@@ -7,7 +7,7 @@ import {Action, Thunk, Reducer, Hash} from "./interfaces";
 const INIT_STORE = 'INIT_STORE';
 export class Store<TState> extends BehaviorSubject<TState> {
     public rootReducer:Reducer;
-    public action$:Subject<Action<TState>>;
+    public action$:Subject<Action>;
 
     constructor(rootReducer:Reducer | Hash<Reducer>,
                 initialState:TState) {
@@ -30,10 +30,10 @@ export class Store<TState> extends BehaviorSubject<TState> {
 
     }
 
-    dispatch(action:Action<TState>|Thunk<TState>) {
-        var _action:Action<TState>,
+    dispatch(action:Action|Thunk<TState>) {
+        var _action:Action,
             _actionThunk:Thunk<TState>,
-            newAction:Action<TState>;
+            newAction:Action;
         if (typeof action === 'function') {
             _actionThunk = action as Thunk<TState>;
             newAction = _actionThunk.apply(this);
@@ -41,7 +41,7 @@ export class Store<TState> extends BehaviorSubject<TState> {
                 return this.action$.next(newAction);
             }
         } else {
-            _action = action as Action<TState>;
+            _action = action as Action;
             this.action$.next(_action);
         }
     }

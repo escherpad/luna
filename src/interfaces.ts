@@ -1,11 +1,10 @@
 /** Created by ge on 12/6/15. */
-export interface Action<TState> {
+export interface Action {
     type: string;
-    state?:TState;
 }
 
 export interface Thunk<TState> {
-    (): Action<TState> | void ;
+    (): Action | void ;
 }
 
 export interface Hash<TS> {
@@ -13,5 +12,5 @@ export interface Hash<TS> {
 }
 
 export interface Reducer {
-    <TState>(state:TState, action:Action<TState>, callback?:(state:TState)=>void):TState;
+    <TState>(state:TState, action:Action, callback?:(state:TState)=>void):TState;
 }

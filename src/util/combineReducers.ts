@@ -18,7 +18,7 @@ export function combineReducers<TState>(reducers:Hash<Reducer>):Reducer {
     const finalReducers:Hash<Reducer> = pickReducers<Reducer>(reducers);
     const keys = Object.keys(finalReducers);
 
-    var combinedReducer = <TState extends Hash<any>>(state:TState, action:Action<TState>) => {
+    var combinedReducer = <TState extends Hash<any>>(state:TState, action:Action) => {
         var hasChanged:boolean = false;
         var finalState:TState = keys.reduce((_state:TState, key:string):TState => {
             var nextState:TState;

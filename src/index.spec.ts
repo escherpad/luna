@@ -6,7 +6,7 @@ import {Action, Hash, Reducer} from "./index";
 
 // the Stat interface need to extend Hash so that the index keys are available.
 
-let reducer = <Reducer>function (state:number, action:Action<number>, callback:(state:number)=>void):number {
+let reducer = <Reducer>function (state:number, action:Action, callback:(state:number)=>void):number {
     if (action.type === "INC") {
         return state + 1;
     } else if (action.type === "DEC") {
@@ -74,7 +74,7 @@ describe("dispatch function", function () {
         var state:number = 30;
         var store = new Store<number>(reducer, state);
 
-        function increase():Action<number> {
+        function increase():Action {
             return {
                 type: "INC"
             };
@@ -95,7 +95,7 @@ describe("dispatch function", function () {
         var state:number = 40;
         var store = new Store<number>(reducer, state);
 
-        function increase():Action<number> {
+        function increase():Action {
             return {
                 type: "INC"
             };
@@ -119,7 +119,7 @@ describe("dispatch function", function () {
         function increase():void {
             var _store:Store<number> = this;
             setTimeout(function ():void {
-                var action:Action<number> = {
+                var action:Action = {
                     type: "INC"
                 };
                 _store.dispatch(action)
@@ -147,7 +147,7 @@ describe("store with hash type", function () {
             counter: 40
         };
 
-        let reducer = <Reducer>function <Number>(state:number, action:Action<TState>):number {
+        let reducer = <Reducer>function <Number>(state:number, action:Action):number {
             if (action.type === "INC") {
                 return state + 1;
             } else if (action.type === "DEC") {
@@ -165,7 +165,7 @@ describe("store with hash type", function () {
         function increase():void {
             var _store:Store<TState> = this;
             setTimeout(function ():void {
-                var action:Action<TState> = {
+                var action:Action = {
                     type: "INC"
                 };
                 _store.dispatch(action)
@@ -193,7 +193,7 @@ describe("store with hash type", function () {
             name: 'Captain Kirk'
         };
 
-        let counterReducer = <Reducer>function <Number>(state:number, action:Action<TState>):number {
+        let counterReducer = <Reducer>function <Number>(state:number, action:Action):number {
             if (action.type === "INC") {
                 return state + 1;
             } else if (action.type === "DEC") {
@@ -202,7 +202,7 @@ describe("store with hash type", function () {
                 return state;
             }
         };
-        let stringReducer = <Reducer>function <String>(state:string, action:Action<TState>):string {
+        let stringReducer = <Reducer>function <String>(state:string, action:Action):string {
             if (action.type === "CAPITALIZE") {
                 return state.toUpperCase();
             } else if (action.type === "LOWERING") {
@@ -240,7 +240,7 @@ describe("store with hash type", function () {
             name: 'Captain Kirk'
         };
 
-        let counterReducer = <Reducer>function <Number>(state:number, action:Action<TState>):number {
+        let counterReducer = <Reducer>function <Number>(state:number, action:Action):number {
             if (action.type === "INC") {
                 return state + 1;
             } else if (action.type === "DEC") {
@@ -249,7 +249,7 @@ describe("store with hash type", function () {
                 return state;
             }
         };
-        let stringReducer = <Reducer>function <String>(state:string, action:Action<TState>):string {
+        let stringReducer = <Reducer>function <String>(state:string, action:Action):string {
             if (action.type === "CAPITALIZE") {
                 return state.toUpperCase();
             } else if (action.type === "LOWERING") {
