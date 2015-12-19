@@ -95,8 +95,8 @@ npm install luna@git+https://git@github.com/escherpad/luna.git
 
 ## Developing Luna
 
-- to build, run `npm run build`. This just called `tsc` in project root.
-- to test, you can use `karma run`. I use webStorm's karma integration to run the tests.
+- to build, run `npm run build`. This just calls `tsc` in project root.
+- to test, you can use `karma start`. I use webStorm's karma integration to run the tests.
 
 ```typescript
 /** Created by ge on 12/6/15. */
