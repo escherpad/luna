@@ -115,20 +115,6 @@ const reducer = <Reducer>function (state:TestState, action:Action<TestState>, ca
     } else if (action.type === "DEC") {
         state.counter -= 1;
         return state
-    } else if (action.type === "ASYNC_INC") {
-        console.log('adding right now ---------------');
-        setTimeout(()=> {
-            console.log('adding right now =================');
-            state.counter += 1;
-            callback(state);
-        }, 10);
-        return undefined;
-    } else if (action.type === "ASYNC_DEC") {
-        setTimeout(()=> {
-            state.counter -= 1;
-            callback(state);
-        }, 10);
-        return undefined;
     } else {
         return state;
     }
@@ -156,7 +142,7 @@ store.subscribe(
 
 // dispatch actions using the dispatcher$ BehaviorSubject
 var action = {
-    type: "ASYNC_INC"
+    type: "INC"
 }
 store.dispatcher$.next(action);
 
