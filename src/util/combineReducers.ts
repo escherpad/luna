@@ -1,4 +1,4 @@
-import {Action, Hash, Reducer} from "../interfaces.ts";
+import {Action, Hash, Reducer} from "../interfaces";
 // helper function
 function pickReducers<Reducer>(reducers:Hash<Reducer>):Hash<Reducer> {
     var initialResult:Hash<Reducer> = {};
