@@ -2,5 +2,7 @@
 import {Reducer, Hash} from "./interfaces";
 import {Store} from "./Store";
 export function createStore <TState>(reducer:Reducer|Hash<Reducer>, initialState:TState):any {
-    return new Store(reducer, initialState);
+    return () => {
+        return new Store(reducer, initialState);
+    };
 }
