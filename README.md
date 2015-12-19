@@ -84,15 +84,19 @@ Luna store is a subclass of the BehaviorSubject from rx. It emits a stream of st
 
 the `store.action$` is a behavior subject for the actions. The store internally subscribes to this stream and executes the reducers on the store state in response to events from this action stream. 
 
-## How to use Luna
+## Installing Luna
 
-first run 
+run 
 
 ```shell
 npm install luna@git+https://git@github.com/escherpad/luna.git 
 ```
 
-and then to run a test you can use `karma run`. I use webStorm's karma integration to run the tests.
+
+## Developing Luna
+
+- to build, run `npm run build`. This just called `tsc` in project root.
+- to test, you can use `karma run`. I use webStorm's karma integration to run the tests.
 
 ```typescript
 /** Created by ge on 12/6/15. */

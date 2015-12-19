@@ -2,7 +2,8 @@
   "name": "luna",
   "version": "1.0.0",
   "description": "a reactive redux-like store",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "directories": {
     "example": "example",
     "test": "tests"
@@ -22,7 +23,12 @@
   },
   "scripts": {
     "preTest": "tsc src/*.spec.ts --watch -m commonjs -t es5 --experimentalDecorators --emitDecoratorMetadata",
-    "test": "mocha src/index.spec.js"
+    "test": "mocha src/index.spec.js",
+    "clean": "rimraf dist",
+    "build:src": "tsc",
+    "build": "npm run clean && npm run build:src",
+    "postinstall": "npm dedupe",
+    "prepublish": "npm run build"
   },
   "author": "Ge Yang <yangge1987@gmail.com>",
   "license": "MIT",
@@ -42,6 +48,7 @@
     "karma-sourcemap-loader": "^0.3.6",
     "karma-typescript-preprocessor": "0.0.21",
     "karma-webpack": "^1.7.0",
+    "rimraf": "^2.4.4",
     "rxjs": "^5.0.0-alpha.14",
     "sourcemap": "^0.1.0",
     "ts-loader": "^0.7.2",
