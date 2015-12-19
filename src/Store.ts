@@ -51,7 +51,8 @@ export class Store<TState> extends BehaviorSubject<TState> {
             .map((state:any) => {
                 var rState:TRState = state[key] as TRState;
                 return rState;
-            });
+            })
+            .distinctUntilChanged();
     };
 
     destroy = ()=> {
