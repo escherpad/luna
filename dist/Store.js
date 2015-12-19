@@ -18,7 +18,8 @@ var Store = (function (_super) {
                 .map(function (state) {
                 var rState = state[key];
                 return rState;
-            });
+            })
+                .distinctUntilChanged();
         };
         this.destroy = function () {
             _this.action$.complete();
