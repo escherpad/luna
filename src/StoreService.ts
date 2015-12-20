@@ -15,9 +15,11 @@ export class StoreService<TState> {
     reducer:Reducer;
     types:Hash<string>;
     $:Hash<any>;
-    actionsCreators: Hash<any>;
+    actions: Hash<any>;
 
     constructor () {
+        this.$ = {};
+        this.actions = {};
         // # Typical coding patterns in the constructor:
         //
         // 1. Compose the reducer of your dependencies and save it to this.reducer
@@ -28,4 +30,6 @@ export class StoreService<TState> {
         //    `this` keyword bound to the rootStore object.
         //
     }
+
+    onStoreInit(store):void {};
 }
