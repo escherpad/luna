@@ -9,15 +9,12 @@
  */
 import {Reducer} from "./interfaces";
 
-export interface Dict {
-    [key:string]:any;
-}
 export class StoreService<TState> {
     initialState:TState;
     reducer:Reducer;
-    types:Dict;
-    $:Dict;
-    actions:Dict;
+    types:any;
+    $:any;
+    actions:any;
 
     constructor() {
         this.$ = {};
