@@ -19,6 +19,7 @@ export class StoreService<TState> {
 
     constructor () {
         this.$ = {};
+        this.types = {};
         this.actions = {};
         // # Typical coding patterns in the constructor:
         //
