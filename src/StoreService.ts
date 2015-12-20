@@ -8,19 +8,22 @@
  * the dependency injection to automatically setup the rootStoreService.
  */
 import {Reducer} from "./interfaces";
-import {Hash} from "./interfaces";
 
+export interface Dict {
+    [key:string]:any;
+}
 export class StoreService<TState> {
     initialState:TState;
     reducer:Reducer;
-    types:Hash<string>;
-    $:Hash<any>;
-    actions: Hash<any>;
+    types:Dict;
+    $:Dict;
+    actions:Dict;
 
-    constructor () {
+    constructor() {
         this.$ = {};
         this.types = {};
         this.actions = {};
+
         // # Typical coding patterns in the constructor:
         //
         // 1. Compose the reducer of your dependencies and save it to this.reducer
@@ -29,8 +32,8 @@ export class StoreService<TState> {
         //    and assign it to `this.initialState`.
         // 4. It is also convenient to collect actionCreators. They will be dispatched with
         //    `this` keyword bound to the rootStore object.
-        //
     }
 
-    onStoreInit(store:any):void {};
+    onStoreInit(store:any):void {
+    };
 }
