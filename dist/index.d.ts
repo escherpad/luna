@@ -4,3 +4,4 @@ export * from "./util/combineReducers";
 export * from "./Store";
 export * from "./createStore";
 export * from "./ng2/provideStore";
+export * from "./ng2/StoreService";

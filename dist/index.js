@@ -7,3 +7,4 @@ __export(require("./util/combineReducers"));
 __export(require("./Store"));
 __export(require("./createStore"));
 __export(require("./ng2/provideStore"));
+__export(require("./ng2/StoreService"));
