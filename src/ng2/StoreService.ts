@@ -31,6 +31,6 @@ export class StoreService<TState> {
         //    `this` keyword bound to the rootStore object.
     }
 
-    onStoreInit(store:any):void {
+    onStoreInit (store:TState):void {
     };
 }
