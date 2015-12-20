@@ -14,3 +14,4 @@ export interface Hash<TS> {
 export interface Reducer {
     <TState>(state:TState, action:Action, callback?:(state:TState)=>void):TState;
 }
+
