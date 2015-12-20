@@ -7,7 +7,7 @@
  * I found it easier to organize the reducer and types as angular2 classes, and use
  * the dependency injection to automatically setup the rootStoreService.
  */
-import {Reducer} from "./interfaces";
+import {Reducer} from "./../interfaces";
 
 export class StoreService<TState> {
     initialState:TState;
