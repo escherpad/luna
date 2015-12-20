@@ -5,7 +5,7 @@ import {createStore} from "./../createStore";
 
 // for angular2
 import "reflect-metadata";
-import {provide} from "../../node_modules/angular2/core.d";
+import {provide} from "angular2/core";
 
 export function provideStore<TState>(reducer:Reducer|Hash<Reducer>, initialState:TState):any[] {
     return [
