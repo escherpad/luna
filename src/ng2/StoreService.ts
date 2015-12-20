@@ -32,5 +32,5 @@ export class StoreService<TState> {
     }
 
     onStoreInit (store:TState):void {
-    };
+    }
 }

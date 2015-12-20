@@ -14,7 +14,6 @@ var StoreService = (function () {
     }
     StoreService.prototype.onStoreInit = function (store) {
     };
-    ;
     return StoreService;
 })();
 exports.StoreService = StoreService;
