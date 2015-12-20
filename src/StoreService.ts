@@ -31,5 +31,5 @@ export class StoreService<TState> {
         //
     }
 
-    onStoreInit(store):void {};
+    onStoreInit(store:any):void {};
 }
