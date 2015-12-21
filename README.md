@@ -2,7 +2,7 @@
 
 [![Join the chat at https://gitter.im/escherpad/luna](https://img.shields.io/badge/GITTER-join%20chat-green.svg?style=flat-square)](https://gitter.im/escherpad/luna?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Luna is a light functional model container inspired by redux written with the Reactive-Extension (Rxjs@v5.0-beta). Luna try to improve upon redux by providing out of the box support for async actions, ways to access child components of the root store as a stream and more. Luna drops verbatim compatibility with the original `redux` to give rise to a more coherent, reactive API.
+Luna is a reactive redux implementation based on the Reactive-Extension (Rxjs@v5.0-beta) and build with Typescript. Luna try to improve upon existing implementations of redux by providing out of the box support for async actions, ways to access child components of the root store as a stream and more. Luna drops verbatim compatibility with the original `redux` to give rise to a more coherent, reactive API.
 
 ## Wanna use Reactive-Extention (Rxjs) and redux in your project, but don't know how?
 
@@ -25,11 +25,11 @@ Another useful patter is action creators. You write a simple function that retur
 
 ### `Thunk` and Async Actions
 
-Now what about async operations such as network calls? Redux thinks that the `store` object should only be mutated synchronously. This makes everything easier to understand and sequential. To allow async operations, you then rely on a function concept called 'thunk'. In simple words, because action objects are not enough, you dispatch functions that contains a certain execution context. With redux you need to use the `redux-thunk` middleware. It patches the redux `store` class, and makes the dispatch method accept `thunks`. This sytanx is slightly strange, so with Luna I decided to support dispatching `thunks` out of the box and avoid the monkey patching.
+Now what about async operations such as network calls? Redux thinks that the `store` object should only be mutated synchronously. This makes everything easier to understand and sequential. To allow async operations, you then rely on a concept called 'thunk'. In simple words, because action objects are not enough, you dispatch functions that contains a certain execution context. With redux you need to use the `redux-thunk` middleware. It patches the redux `store` class, and makes the dispatch method accept `thunks`. This sytanx is slightly strange, so with Luna I decided to support dispatching `thunks` out of the box and avoid the monkey patching.
 
 ### Middlewares (don't need anymore)
 
-You don't need middleware anymore. The luna `Store` is a subclass of the `Rxjs` `BehaviorSubject`. It also have a property called `Store.action$`, which is a Subject for all of the actions the store accepts. As a result, if you want to log all of the actions, you can just subscribe to the `Store.action$` stream.
+You don't need middleware anymore now you have Rxjs. In Rxjs, an observable is a stream of data that you can subscribe to. In Luna, the `Store` is a subclass of the `Rxjs.BehaviorSubject`, which is an extension of the `Observable` class. In addition, Luna `Store` also has a property called `Store.action$`, which is a `Rx.Subject` for all of the actions the store accepts. In a reactive paradigm, if you want to log all of the actions for instance, you can just subscribe to the `Store.action$` stream.
 
 ### Persistent Storage and Children of the Root Store
 
@@ -73,12 +73,23 @@ and I personally find this very powerful!
 
 ## About this library and What's different about Luna (from redux)?
 
-- Luna is written using the reactive-extension, so that both the action and the states are streams.
-- Luna `dispatcher` support `actionCreator` and asynchronous actions out of the box
-    - Luna's Thunks take no input arguments. The Store object is accessed as `this` keyword in the thunk. I'm experimenting with this as a cleaner syntax.
-- Luna is written for an Angular2 project, and provide dependency injection (DI) via 'provideStore' function.
+- Luna is written using the reactive-extension, so that both the state of the store and the actions are streams.
+- Luna `dispatch` method supports `actionCreator` and asynchronous actions out of the box.
+    - Luna's `Thunks` take no input arguments. The Store object is accessed as `this` keyword in the thunk. I'm experimenting with this as a cleaner syntax.
+- Luna is written for an Angular2 project, and provide dependency injection (DI) via a 'provideStore' 
+    function, and a StoreService class that you can extend in your angular2 applications.
+    
+## For Angular2 Oevelopers Out There~
 
-## Overview
+Angular2 just got out, and a lot of us are still figuring out the best practices. Getting the redux, Typescript and angular2 dependency injection to work well together has been a challenge for me. 
+
+To make getting started easy for you, I included a simple class called `StoreService` in Luna. In escherpad the application I'm working on, I setup a service (Class) for each child of the root store, and extends this `StoreService` class. I include the reducer, action types, as well as the action creators inside this service class, and use the angular2 dependency injection to connect everything together.
+
+This way, you don't have to work with multiple files for each child store and have a giant root file with a lot of references. Each child store only need to know what it depends on itself.
+
+I currently do not use the `provideStore` provider for the reason given above.
+
+## Architecture Overview
 
 Luna store is a subclass of the BehaviorSubject from rx. It emits a stream of state objects that you can subscribe to. 
 
@@ -86,7 +97,7 @@ the `store.action$` is a behavior subject for the actions. The store internally 
 
 ## Installing Luna
 
-run 
+run (I couldn't get the npm package name luna, so making do with this for now. If you think this is a bad idea let me know! I'm also open for better names!)
 
 ```shell
 npm install luna@git+https://git@github.com/escherpad/luna.git 
