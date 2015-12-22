@@ -81,11 +81,11 @@ and I personally find this very powerful!
     
 ## For Angular2 Oevelopers Out There~
 
-Angular2 just got out, and a lot of us are still figuring out the best practices. Getting the redux, Typescript and angular2 dependency injection to work well together has been a challenge for me. 
+Angular2 Beta just came out, and a lot of us are still figuring out the best practices. Getting redux, Typescript and angular2 dependency injection to work well together was a challenge. 
 
-To make getting started easy for you, I included a simple class called `StoreService` in Luna. In escherpad the application I'm working on, I setup a service (Class) for each child of the root store, and extends this `StoreService` class. I include the reducer, action types, as well as the action creators inside this service class, and use the angular2 dependency injection to connect everything together.
+To make getting started easy for you, Luna includes a simple class called `StoreService` in Luna. In escherpad the application I'm working on, Each child of the root store has a store service class that extends `StoreService` class. This service class include the reducer, action types, as well as the action creators inside, and use the angular2 dependency injection to connect everything together.
 
-This way, you don't have to work with multiple files for each child store and have a giant root file with a lot of references. Each child store only need to know what it depends on itself.
+This way, script for each child store only need to know what it depends on itself. Components become truly composable.
 
 I currently do not use the `provideStore` provider for the reason given above.
 
