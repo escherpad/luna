@@ -79,7 +79,7 @@ and I personally find this very powerful!
 - Luna is written for an Angular2 project, and provide dependency injection (DI) via a 'provideStore' 
     function, and a StoreService class that you can extend in your angular2 applications.
     
-## For Angular2 Oevelopers Out There~
+## For Angular2 Developers Out There~
 
 Angular2 just got out, and a lot of us are still figuring out the best practices. Getting the redux, Typescript and angular2 dependency injection to work well together has been a challenge for me. 
 
