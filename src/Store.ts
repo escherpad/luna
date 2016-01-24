@@ -40,6 +40,8 @@ export class Store<TState> extends BehaviorSubject<TState> {
             if (typeof newAction !== 'undefined') {
                 return this.action$.next(newAction);
             }
+        } else if (!action) {
+            throw Error("Plain object action is undefined: action=" + _action);
         } else {
             _action = action as Action;
             this.action$.next(_action);
