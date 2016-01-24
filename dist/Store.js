@@ -45,6 +45,9 @@ var Store = (function (_super) {
                 return this.action$.next(newAction);
             }
         }
+        else if (!action) {
+            throw Error("Plain object action is undefined: action=" + _action);
+        }
         else {
             _action = action;
             this.action$.next(_action);

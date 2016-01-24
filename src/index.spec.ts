@@ -48,7 +48,7 @@ describe("interfaces", function () {
 import {combineReducers} from "./index";
 describe("combineReducers", function () {
     it("should return same reducer", function () {
-    })
+    });
 });
 
 import {Store} from "./index";
@@ -168,15 +168,15 @@ describe("store with hash type", function () {
                 var action:Action = {
                     type: "INC"
                 };
-                _store.dispatch(action)
+                _store.dispatch(action);
             }, 200);
         }
 
         store.subscribe(
-            (state)=> {
-                console.log('spec state: ', state)
+            (state) => {
+                console.log('spec state: ', state);
             },
-            error=> console.log('error ', error),
+            error => console.log('error ', error),
             () => console.log('completed.')
         );
         store.dispatch(increase);
@@ -230,7 +230,7 @@ describe("store with hash type", function () {
         store.dispatch({type: "INC"});
         store.destroy();
     });
-    it("should allow filtered partial states in a stream", function(){
+    it("should allow filtered partial states in a stream", function () {
         interface TState {
             counter: number;
             name: string;
@@ -266,10 +266,10 @@ describe("store with hash type", function () {
         var store = new Store<TState>(rootReducer, state);
 
         store.select('name').subscribe(
-            (state)=> {
-                console.log('spec state: ', state)
+            (state) => {
+                console.log('spec state: ', state);
             },
-            error=> console.log('error ', error),
+            error => console.log('error ', error),
             () => console.log('completed.')
         );
 
@@ -284,6 +284,6 @@ describe("store with hash type", function () {
         store.dispatch({type: "DEC"});
 
         store.destroy();
-    })
+    });
 
 });
