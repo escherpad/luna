@@ -10,9 +10,13 @@
   },
   "homepage": "https://github.com/ngrx/store#readme",
   "keywords": [
+    "Redux",
+    "Store",
     "RxJS",
     "Angular2",
-    "Redux"
+    "ng2",
+    "TypeScript",
+    "ts"
   ],
   "repository": {
     "type": "git",
