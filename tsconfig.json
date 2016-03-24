@@ -10,7 +10,8 @@
     "declaration": true
   },
   "files": [
-    "src/index.ts"
+    "src/index.ts",
+    "typings/tsd.d.ts"
   ],
   "exclude": [
     "node_modules"
