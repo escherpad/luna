@@ -1,6 +1,7 @@
-var Store_1 = require("./Store");
+"use strict";
+const Store_1 = require("./Store");
 function createStore(reducer, initialState) {
-    return function () {
+    return () => {
         return new Store_1.Store(reducer, initialState);
     };
 }

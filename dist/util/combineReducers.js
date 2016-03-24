@@ -1,9 +1,10 @@
+"use strict";
 // helper function
 function pickReducers(reducers) {
     var initialResult = {};
     return Object
         .keys(reducers)
-        .reduce(function (finalReducer, key) {
+        .reduce((finalReducer, key) => {
         if (typeof reducers[key] === 'function') {
             finalReducer[key] = reducers[key];
         }
@@ -12,11 +13,13 @@ function pickReducers(reducers) {
 }
 // mixed reducer type is not supported, but I want to add them later on.
 function combineReducers(reducers) {
-    var finalReducers = pickReducers(reducers);
-    var keys = Object.keys(finalReducers);
-    var combinedReducer = function (state, action) {
+    const finalReducers = pickReducers(reducers);
+    const keys = Object.keys(finalReducers);
+    var combinedReducer = (state, action) => {
+        if (typeof state === "undefined")
+            state = {};
         var hasChanged = false;
-        var finalState = keys.reduce(function (_state, key) {
+        var finalState = keys.reduce((_state, key) => {
             var nextState;
             var previousStateForKey = _state[key];
             var nextStateForKey = finalReducers[key](_state[key], action);

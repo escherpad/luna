@@ -6,6 +6,7 @@ export declare class Store<TState> extends BehaviorSubject<TState> {
     action$: Subject<Action>;
     constructor(rootReducer: Reducer | Hash<Reducer>, initialState: TState);
     dispatch(action: Action | Thunk<TState>): void;
+    getState: () => TState;
     select: <TRState>(key: string) => Observable<TRState>;
     destroy: () => void;
 }
