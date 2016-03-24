@@ -1,40 +1,47 @@
 "use strict";
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 /** Created by ge on 12/4/15. */
-const rxjs_1 = require('rxjs');
-const combineReducers_1 = require('./util/combineReducers');
-const INIT_STORE = 'INIT_STORE';
-class Store extends rxjs_1.BehaviorSubject {
-    constructor(rootReducer, initialState) {
+var rxjs_1 = require('rxjs');
+var combineReducers_1 = require('./util/combineReducers');
+var INIT_STORE = 'INIT_STORE';
+var Store = (function (_super) {
+    __extends(Store, _super);
+    function Store(rootReducer, initialState) {
+        var _this = this;
         // this is a stream for the states of the store, call BehaviorSubject constructor
-        super(combineReducers_1.passOrCombineReducers(rootReducer)(initialState, { type: INIT_STORE }));
+        _super.call(this, combineReducers_1.passOrCombineReducers(rootReducer)(initialState, { type: INIT_STORE }));
         // this method is just a wrapper function to make it compatible with redux convention.
-        this.getState = () => {
-            return this.value;
+        this.getState = function () {
+            return _this.value;
         };
-        this.select = (key) => {
-            return this
-                .map((state) => {
+        this.select = function (key) {
+            return _this
+                .map(function (state) {
                 var rState = state[key];
                 return rState;
             })
                 .distinctUntilChanged();
         };
-        this.destroy = () => {
-            this.action$.complete();
-            this.complete();
+        this.destroy = function () {
+            _this.action$.complete();
+            _this.complete();
         };
         this.rootReducer = combineReducers_1.passOrCombineReducers(rootReducer);
         // action$ is a stream for action objects
         this.action$ = new rxjs_1.Subject();
         this.action$
-            .subscribe((action) => {
-            var currentState = this.getValue();
-            var state = this.rootReducer(currentState, action);
+            .subscribe(function (action) {
+            var currentState = _this.getValue();
+            var state = _this.rootReducer(currentState, action);
             if (typeof state !== "undefined")
-                this.next(state);
-        }, (error) => console.log('dispatcher$ Error: ', error.toString()), () => console.log('dispatcher$ completed'));
+                _this.next(state);
+        }, function (error) { return console.log('dispatcher$ Error: ', error.toString()); }, function () { return console.log('dispatcher$ completed'); });
     }
-    dispatch(action) {
+    Store.prototype.dispatch = function (action) {
         var _action, _actionThunk, newAction;
         if (typeof action === 'function') {
             _actionThunk = action;
@@ -50,6 +57,7 @@ class Store extends rxjs_1.BehaviorSubject {
             _action = action;
             this.action$.next(_action);
         }
-    }
-}
+    };
+    return Store;
+}(rxjs_1.BehaviorSubject));
 exports.Store = Store;
