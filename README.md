@@ -106,6 +106,7 @@ npm install luna@git+https://git@github.com/escherpad/luna.git
 
 ## Developing Luna
 
+- you need to have `karma-cli` installed globally. (do `npm install -g karma-cli`)
 - to build, run `npm run build`. This just calls `tsc` in project root.
 - to test, you can use `karma start`. I use webStorm's karma integration to run the tests.
 

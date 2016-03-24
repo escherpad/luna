@@ -1,9 +1,11 @@
 # editor
 .idea
 
+# test generated files
+src/**.js
+
 # packages
 node_modules
-
 
 # log files contain sensitive directory information.
 **.log

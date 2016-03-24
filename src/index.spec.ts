@@ -1,5 +1,4 @@
 declare var describe:any, it:any, expect:any, console:any, require:any;
-require('es6-shim');
 
 /** Created by ge on 12/6/15. */
 import {Action, Hash, Reducer} from "./index";

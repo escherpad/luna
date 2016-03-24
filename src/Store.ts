@@ -16,7 +16,7 @@ export class Store<TState> extends BehaviorSubject<TState> {
         this.rootReducer = passOrCombineReducers(rootReducer);
 
         // action$ is a stream for action objects
-        this.action$ = new Subject();
+        this.action$ = new Subject<Action>();
         this.action$
             .subscribe(
                 (action) => {
@@ -47,6 +47,11 @@ export class Store<TState> extends BehaviorSubject<TState> {
             this.action$.next(_action);
         }
     }
+
+    // this method is just a wrapper function to make it compatible with redux convention.
+    getState = ():TState => {
+        return this.value
+    };
 
     select = <TRState>(key:string):Observable<TRState> => {
         return this
