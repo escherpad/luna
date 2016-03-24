@@ -54,9 +54,9 @@
     "rxjs": "^5.0.0-alpha.14",
     "sourcemap": "^0.1.0",
     "ts-loader": "^0.7.2",
-    "tsd": "^0.6.5",
     "tsify": "^0.13.1",
     "typescript": "^1.7.3",
+    "typings": "^0.7.9",
     "webpack": "^1.12.9"
   }
 }

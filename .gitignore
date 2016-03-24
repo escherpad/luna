@@ -3,6 +3,7 @@
 
 # test generated files
 src/**.js
+typings
 
 # packages
 node_modules
