@@ -8,7 +8,7 @@
     "example": "example",
     "test": "tests"
   },
-  "homepage": "https://github.com/ngrx/store#readme",
+  "homepage": "https://github.com/escherpad/luna#readme",
   "keywords": [
     "Redux",
     "Store",
