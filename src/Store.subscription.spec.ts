@@ -49,5 +49,23 @@ describe("store$", function () {
         testAction$
             .subscribe(action => store$.dispatch(action));
     });
+    it("can subscribe to actions directly", function () {
+        let store$:Store<number> = new Store(reducer, 10);
+
+        let testAction$ = Observable.from([
+            {type: "INC"},
+            {type: "DEC"},
+            {type: "INC"},
+            {type: "DEC"}
+        ]);
+        store$
+            .map(store => {
+                return {store, action: store$.action$.getValue()};
+            })
+            .subscribe(state => console.log("test 4: ", state));
+
+        testAction$
+            .subscribe(store$.action$);
+    });
 });
 
