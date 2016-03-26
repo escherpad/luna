@@ -1,22 +1,23 @@
 /** Created by ge on 12/4/15. */
-import {Subject, BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {passOrCombineReducers} from './util/combineReducers';
 import {Action, Thunk, Reducer, Hash} from "./interfaces";
 
 
 const INIT_STORE = 'INIT_STORE';
+const INIT_STORE_ACTION = {type: INIT_STORE};
 export class Store<TState> extends BehaviorSubject<TState> {
     public rootReducer:Reducer;
-    public action$:Subject<Action>;
+    public action$:BehaviorSubject<Action>;
 
     constructor(rootReducer:Reducer | Hash<Reducer>,
                 initialState:TState) {
         // this is a stream for the states of the store, call BehaviorSubject constructor
-        super(passOrCombineReducers(rootReducer)(initialState, {type: INIT_STORE}));
+        super(passOrCombineReducers(rootReducer)(initialState, INIT_STORE_ACTION));
         this.rootReducer = passOrCombineReducers(rootReducer);
 
         // action$ is a stream for action objects
-        this.action$ = new Subject<Action>();
+        this.action$ = new BehaviorSubject<Action>(INIT_STORE_ACTION);
         this.action$
             .subscribe(
                 (action) => {
@@ -36,7 +37,7 @@ export class Store<TState> extends BehaviorSubject<TState> {
             newAction:Action;
         if (typeof action === 'function') {
             _actionThunk = action as Thunk<TState>;
-            newAction = _actionThunk.apply(this);
+            newAction = <Action>_actionThunk.apply(this);
             if (typeof newAction !== 'undefined') {
                 return this.action$.next(newAction);
             }

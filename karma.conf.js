@@ -9,7 +9,8 @@ module.exports = function (config) {
         basePath: '',
         frameworks: ['jasmine'],
         files: [
-            'src/*.spec.ts'
+            'src/index.spec.ts' // just use index to import everything
+            //'src/*.spec.ts'
         ],
         exclude: [],
         preprocessors: {
