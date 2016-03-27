@@ -7,14 +7,14 @@ var __extends = (this && this.__extends) || function (d, b) {
 /** Created by ge on 12/4/15. */
 var rxjs_1 = require('rxjs');
 var combineReducers_1 = require('./util/combineReducers');
-var INIT_STORE = 'INIT_STORE';
-var INIT_STORE_ACTION = { type: INIT_STORE };
+exports.INIT_STORE = '@@luna/INIT_STORE';
+exports.INIT_STORE_ACTION = { type: exports.INIT_STORE };
 var Store = (function (_super) {
     __extends(Store, _super);
     function Store(rootReducer, initialState) {
         var _this = this;
         // this is a stream for the states of the store, call BehaviorSubject constructor
-        _super.call(this, combineReducers_1.passOrCombineReducers(rootReducer)(initialState, INIT_STORE_ACTION));
+        _super.call(this, combineReducers_1.passOrCombineReducers(rootReducer)(initialState, exports.INIT_STORE_ACTION));
         // this method is just a wrapper function to make it compatible with redux convention.
         this.getState = function () {
             return _this.value;
@@ -33,7 +33,7 @@ var Store = (function (_super) {
         };
         this.rootReducer = combineReducers_1.passOrCombineReducers(rootReducer);
         // action$ is a stream for action objects
-        this.action$ = new rxjs_1.BehaviorSubject(INIT_STORE_ACTION);
+        this.action$ = new rxjs_1.BehaviorSubject(exports.INIT_STORE_ACTION);
         this.action$
             .subscribe(function (action) {
             var currentState = _this.getValue();
