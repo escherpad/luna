@@ -1,5 +1,4 @@
 /** Created by ge on 3/26/16. */
-declare var describe:any, it:any, expect:any, console:any, require:any;
 
 /* so that this show up as a module */
 export default {};
@@ -46,12 +45,6 @@ describe("interfaces", function () {
     });
 });
 
-import {combineReducers} from "./index";
-describe("combineReducers", function () {
-    it("should return same reducer", function () {
-    });
-});
-
 import {Store} from "./index";
 describe("store", function () {
     it("sync reducers should work", function () {
@@ -65,7 +58,9 @@ describe("store", function () {
             () => console.log('completed.')
         );
         store.dispatch({type: "INC"});
+        expect(store.value).toEqual(11);
         store.dispatch({type: "DEC"});
+        expect(store.value).toEqual(10);
         store.destroy();
     });
 });
@@ -145,7 +140,7 @@ describe("store with hash type", function () {
         interface TState extends Hash<number> {
         }
 
-        let reducer = <Reducer>function <Number>(state:number=0, action:Action):number {
+        let reducer = <Reducer>function <Number>(state:number = 0, action:Action):number {
             if (action.type === "INC") {
                 return state + 1;
             } else if (action.type === "DEC") {
@@ -188,7 +183,7 @@ describe("store with hash type", function () {
             counter: 40
         };
 
-        let reducer = <Reducer>function <Number>(state:number=0, action:Action):number {
+        let reducer = <Reducer>function <Number>(state:number = 0, action:Action):number {
             if (action.type === "INC") {
                 return state + 1;
             } else if (action.type === "DEC") {

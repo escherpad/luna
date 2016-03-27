@@ -19,13 +19,14 @@ import {Observable} from 'rxjs';
 describe("store$", function () {
     it("can get updated state", function () {
 
-        let store$:Store<number> = new Store(reducer);
+        let store$:Store<number> = new Store(reducer) as Store<number>;
+        expect(store$.value).toEqual(0);
         store$.subscribe(state => console.log("test 1: ", state));
 
     });
     it("can get updated state as well as actions", function () {
 
-        let store$:Store<number> = new Store(reducer, 10);
+        let store$:Store<number> = new Store(reducer, 10) as Store<number>;
         store$
             .map(store => ({store, action: store$.action$.getValue()}))
             .subscribe(state => console.log("test 2: ", state));
@@ -47,10 +48,10 @@ describe("store$", function () {
             .subscribe(state => console.log("test 3: ", state));
 
         testAction$
-            .subscribe(action => store$.dispatch(action));
+            .subscribe((action:Action) => store$.dispatch(action));
     });
     it("can subscribe to actions directly", function () {
-        let store$:Store<number> = new Store(reducer, 10);
+        let store$:Store<number> = new Store(reducer, 10) as Store<number>;
 
         let testAction$ = Observable.from([
             {type: "INC"},

@@ -3,15 +3,15 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {passOrCombineReducers} from './util/combineReducers';
 import {Action, Thunk, Reducer, Hash} from "./interfaces";
 
+export const INIT_STORE = '@@luna/INIT_STORE';
+export const INIT_STORE_ACTION = {type: INIT_STORE};
 
-const INIT_STORE = 'INIT_STORE';
-const INIT_STORE_ACTION = {type: INIT_STORE};
 export class Store<TState> extends BehaviorSubject<TState> {
     public rootReducer:Reducer;
     public action$:BehaviorSubject<Action>;
 
     constructor(rootReducer:Reducer | Hash<Reducer>,
-                initialState:TState) {
+                initialState?:TState) {
         // this is a stream for the states of the store, call BehaviorSubject constructor
         super(passOrCombineReducers(rootReducer)(initialState, INIT_STORE_ACTION));
         this.rootReducer = passOrCombineReducers(rootReducer);
