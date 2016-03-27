@@ -3,7 +3,6 @@
 export default {};
 
 /** Created by ge on 12/6/15. */
-import {queue} from "rxjs/scheduler/queue";
 import {Action, Hash, Reducer, Store, INIT_STORE_ACTION} from "./index";
 
 interface TestAction extends Action {
