@@ -68,6 +68,7 @@ describe("store thread schedule", function () {
         expect(store.value).toEqual({counter: 2, name: "EPISODEYANG"});
         subscription.unsubscribe();
 
+        /* an anti-pattern */
         var subscription = store.select('name')
             .subscribe(name=> {
                 store.dispatch({type: "INC"})

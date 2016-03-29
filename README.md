@@ -37,10 +37,9 @@ store$.subscribe((state)=>console.log(state));
 
 calling `new Store(reducer[, initialState])` returns a `store$` instance. Luna `Store` is a subclass of the BehaviorSubject from rx. So it takes an intialstate at instantiation, and emits a stream of state objects that you can subscribe to. 
 
-the `store$.action$` is a behavior subject for the actions. The store internally subscribes to this stream and executes the reducers on the store state in response to events from this action stream. 
+the `store$.action$` is a (publish) subject for the actions. The store internally subscribes to this stream and executes the reducers on the store state in response to events from this action stream. Because it is a (publish) subject, it does not trigger event on subscription. It also does not have the `getValue()` method.  
 
-The `store$.update$` is a replay subject for `{state, action}` bundle. It receives updated state/action bundle after the action has been applied to the store. This stream is used as a `post-action` hook for middlewares such as [luna-saga](https://github.com/escherpad/luna-saga).
-
+The `store$.update$` is a (publish) subject for `{state, action}` bundle. It receives updated state/action bundle after the action has been applied to the store. This stream is used as a `post-action` hook for middlewares such as [luna-saga](https://github.com/escherpad/luna-saga). Because it is a (publish) subject, it does not trigger event on subscription. It also does not have the `getValue()` method.
 
 ## Wanna use Reactive-Extention (Rxjs) and redux in your project, but don't know how?
 
