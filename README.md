@@ -39,7 +39,7 @@ calling `new Store(reducer[, initialState])` returns a `store$` instance. Luna `
 
 the `store$.action$` is a behavior subject for the actions. The store internally subscribes to this stream and executes the reducers on the store state in response to events from this action stream. 
 
-The `store$.update$` is a replay subject for `{state, action}` bundle. It receives updated state/action bundle after the action has been applied to the store. This stream is used as a `post-action` hook for middlewares such as [luna-saga](https://github.com/escherpad/luna-saga). The reason this `update$` stream is useful is because the `store$` stream does not update when the state returned is identical to before. Therefore to get `{state, action}` updates for `noop` actions, we need this dedicated update stream.
+The `store$.update$` is a replay subject for `{state, action}` bundle. It receives updated state/action bundle after the action has been applied to the store. This stream is used as a `post-action` hook for middlewares such as [luna-saga](https://github.com/escherpad/luna-saga).
 
 
 ## Wanna use Reactive-Extention (Rxjs) and redux in your project, but don't know how?
