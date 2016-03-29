@@ -1,6 +1,6 @@
 {
   "name": "luna",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "description": "a reactive redux-like store",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
