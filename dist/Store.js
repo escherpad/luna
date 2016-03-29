@@ -34,7 +34,7 @@ var Store = (function (_super) {
         this.rootReducer = combineReducers_1.passOrCombineReducers(rootReducer);
         // action$ is a stream for action objects
         this.action$ = new rxjs_1.BehaviorSubject(exports.INIT_STORE_ACTION);
-        this.update$ = new rxjs_1.ReplaySubject(1);
+        this.update$ = new rxjs_1.ReplaySubject(0);
         this.action$
             .subscribe(function (action) {
             var currentState = _this.getValue();
