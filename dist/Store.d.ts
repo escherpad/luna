@@ -8,7 +8,7 @@ export declare const INIT_STORE_ACTION: {
 export declare class Store<TState> extends BehaviorSubject<TState> {
     rootReducer: Reducer;
     update$: Subject<StateActionBundle<TState>>;
-    action$: BehaviorSubject<Action>;
+    action$: Subject<Action>;
     constructor(rootReducer: Reducer | Hash<Reducer>, initialState?: TState);
     dispatch(action: Action | Thunk): void;
     getState: () => TState;

@@ -33,8 +33,8 @@ var Store = (function (_super) {
         };
         this.rootReducer = combineReducers_1.passOrCombineReducers(rootReducer);
         // action$ is a stream for action objects
-        this.action$ = new rxjs_1.BehaviorSubject(exports.INIT_STORE_ACTION);
-        this.update$ = new rxjs_1.ReplaySubject(0);
+        this.action$ = new rxjs_1.Subject();
+        this.update$ = new rxjs_1.Subject();
         this.action$
             .subscribe(function (action) {
             var currentState = _this.getValue();
@@ -42,6 +42,7 @@ var Store = (function (_super) {
             _this.next(state);
             _this.update$.next({ state: _this.getValue(), action: action });
         }, function (error) { return console.log('dispatcher$ Error: ', error.toString()); }, function () { return console.log('dispatcher$ completed'); });
+        this.action$.next(exports.INIT_STORE_ACTION);
     }
     Store.prototype.dispatch = function (action) {
         var _action, _actionThunk, newAction;
