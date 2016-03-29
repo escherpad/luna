@@ -2,7 +2,7 @@
 export interface Action {
     type: string;
 }
-export interface Thunk<TState> {
+export interface Thunk {
     (): Action | void;
 }
 export interface Hash<TS> {
