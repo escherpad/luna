@@ -1,5 +1,5 @@
 /** Created by ge on 12/4/15. */
-import {BehaviorSubject, ReplaySubject, Observable} from 'rxjs';
+import {BehaviorSubject, Subject, Observable} from 'rxjs';
 import {passOrCombineReducers} from './util/combineReducers';
 import {Action, Thunk, Reducer, Hash, StateActionBundle} from "./interfaces";
 
@@ -8,8 +8,8 @@ export const INIT_STORE_ACTION = {type: INIT_STORE};
 
 export class Store<TState> extends BehaviorSubject<TState> {
     public rootReducer:Reducer;
-    public update$:ReplaySubject<StateActionBundle<TState>>;
-    public action$:BehaviorSubject<Action>;
+    public update$:Subject<StateActionBundle<TState>>;
+    public action$:Subject<Action>;
 
     constructor(rootReducer:Reducer | Hash<Reducer>,
                 initialState?:TState) {
@@ -18,8 +18,8 @@ export class Store<TState> extends BehaviorSubject<TState> {
         this.rootReducer = passOrCombineReducers(rootReducer);
 
         // action$ is a stream for action objects
-        this.action$ = new BehaviorSubject<Action>(INIT_STORE_ACTION);
-        this.update$ = new ReplaySubject<StateActionBundle<TState>>(0);
+        this.action$ = new Subject<Action>();
+        this.update$ = new Subject<StateActionBundle<TState>>();
         this.action$
             .subscribe(
                 (action) => {
@@ -32,6 +32,7 @@ export class Store<TState> extends BehaviorSubject<TState> {
                 () => console.log('dispatcher$ completed')
             );
 
+        this.action$.next(INIT_STORE_ACTION);
     }
 
     dispatch(action:Action|Thunk) {

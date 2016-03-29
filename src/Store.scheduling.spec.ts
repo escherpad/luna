@@ -41,11 +41,9 @@ describe("store thread schedule", function () {
         };
 
         var store = new Store<TState>(rootReducer); // does not need to pass in  a inital state
-        var firstAction:TestAction;
-        store.action$.subscribe(action=> {
-            firstAction = action;
-        });
-        expect(firstAction).toBe(INIT_STORE_ACTION);
+        // you can not capture the INIT_STORE action,
+        // because the <store>.action$ stream is HOT
+        // and the initialization happens synchronously.
         expect(store.value).toEqual({counter: 0, name: ""});
 
         store.subscribe(
@@ -75,7 +73,10 @@ describe("store thread schedule", function () {
                 store.dispatch({type: "INC"})
             });
         store.dispatch({type: "SET", payload: "Ge Yang"});
-        /* the counter increase fires twice, once on subscription, once on update */
+        /* the counter increase fires twice, once on subscription, once on update because
+         * the store is a behavioralSubject. It is equivalent to ReplaySubject with a buffer
+          * size of 2 in this regard.
+          * If you want to avoid triggering on subscription, use update$ or action$ */
         expect(store.value).toEqual({counter: 4, name: "Ge Yang"});
         subscription.unsubscribe();
 

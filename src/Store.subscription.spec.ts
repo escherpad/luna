@@ -28,8 +28,8 @@ describe("store$", function () {
 
         let store$:Store<number> = new Store(reducer, 10) as Store<number>;
         store$
-            .map(store => ({store, action: store$.action$.getValue()}))
-            .subscribe(state => console.log("test 2: ", state));
+            .update$
+            .subscribe((_) => console.log("test 2: ", _));
 
     });
     it("can subscribe to actions", function () {
@@ -42,10 +42,8 @@ describe("store$", function () {
             {type: "DEC"}
         ]);
         store$
-            .map(store => {
-                return {store, action: store$.action$.getValue()};
-            })
-            .subscribe(state => console.log("test 3: ", state));
+            .update$
+            .subscribe(_ => console.log("test 3: ", _));
 
         testAction$
             .subscribe((action:Action) => store$.dispatch(action));
@@ -60,10 +58,8 @@ describe("store$", function () {
             {type: "DEC"}
         ]);
         store$
-            .map(store => {
-                return {store, action: store$.action$.getValue()};
-            })
-            .subscribe(state => console.log("test 4: ", state));
+            .update$
+            .subscribe(_ => console.log("test 4: ", _));
 
         testAction$
             .subscribe(store$.action$);
