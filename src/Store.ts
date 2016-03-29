@@ -54,18 +54,18 @@ export class Store<TState> extends BehaviorSubject<TState> {
     }
 
     // this method is just a wrapper function to make it compatible with redux convention.
-    getState = ():TState => {
-        return this.value
-    };
+    getState():TState {
+        return this.getValue();
+    }
 
-    select = <TRState>(key:string):Observable<TRState> => {
+    select <TRState>(key:string):Observable<TRState> {
         return this
             .map((state:any) => {
                 var rState:TRState = state[key] as TRState;
                 return rState;
             })
             .distinctUntilChanged();
-    };
+    }
 
     destroy = ()=> {
         this.action$.complete();
