@@ -15,18 +15,6 @@ var Store = (function (_super) {
         var _this = this;
         // this is a stream for the states of the store, call BehaviorSubject constructor
         _super.call(this, combineReducers_1.passOrCombineReducers(rootReducer)(initialState, exports.INIT_STORE_ACTION));
-        // this method is just a wrapper function to make it compatible with redux convention.
-        this.getState = function () {
-            return _this.value;
-        };
-        this.select = function (key) {
-            return _this
-                .map(function (state) {
-                var rState = state[key];
-                return rState;
-            })
-                .distinctUntilChanged();
-        };
         this.destroy = function () {
             _this.action$.complete();
             _this.complete();
@@ -60,6 +48,18 @@ var Store = (function (_super) {
             _action = action;
             this.action$.next(_action);
         }
+    };
+    // this method is just a wrapper function to make it compatible with redux convention.
+    Store.prototype.getState = function () {
+        return this.getValue();
+    };
+    Store.prototype.select = function (key) {
+        return this
+            .map(function (state) {
+            var rState = state[key];
+            return rState;
+        })
+            .distinctUntilChanged();
     };
     return Store;
 }(rxjs_1.BehaviorSubject));
