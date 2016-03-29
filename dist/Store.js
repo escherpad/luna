@@ -34,12 +34,13 @@ var Store = (function (_super) {
         this.rootReducer = combineReducers_1.passOrCombineReducers(rootReducer);
         // action$ is a stream for action objects
         this.action$ = new rxjs_1.BehaviorSubject(exports.INIT_STORE_ACTION);
+        this.update$ = new rxjs_1.ReplaySubject(1);
         this.action$
             .subscribe(function (action) {
             var currentState = _this.getValue();
             var state = _this.rootReducer(currentState, action);
-            if (typeof state !== "undefined")
-                _this.next(state);
+            _this.next(state);
+            _this.update$.next({ state: _this.getValue(), action: action });
         }, function (error) { return console.log('dispatcher$ Error: ', error.toString()); }, function () { return console.log('dispatcher$ completed'); });
     }
     Store.prototype.dispatch = function (action) {
