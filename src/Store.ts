@@ -19,7 +19,7 @@ export class Store<TState> extends BehaviorSubject<TState> {
 
         // action$ is a stream for action objects
         this.action$ = new BehaviorSubject<Action>(INIT_STORE_ACTION);
-        this.update$ = new ReplaySubject<StateActionBundle<TState>>(1);
+        this.update$ = new ReplaySubject<StateActionBundle<TState>>(0);
         this.action$
             .subscribe(
                 (action) => {
