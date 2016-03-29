@@ -4,6 +4,44 @@
 
 Luna is a reactive redux implementation based on the Reactive-Extension (Rxjs@v5.0-beta) and build with Typescript. Luna try to improve upon existing implementations of redux by providing out of the box support for async actions, ways to access child components of the root store as a stream and more. Luna drops verbatim compatibility with the original `redux` to give rise to a more coherent, reactive API.
 
+## Installing Luna
+
+Just do `npm install luna` to install from npm. Or you can install from github:
+
+```shell
+npm install luna@git+https://git@github.com/escherpad/luna.git 
+```
+
+## To Use:
+
+```javascript
+import {Store} from "luna";
+
+let reducer = function (state = 0, action){// default value here would be 0.
+    if (action.type === "INC") {
+        return state + 1;
+    } else {
+        return state;
+    }
+}
+
+let store$ = new Store(reducer);
+
+store$.dispatch({type: "INC"})
+store$.subscribe((state)=>console.log(state));
+// 0
+// 1
+```
+
+## The `store` instance
+
+calling `new Store(reducer[, initialState])` returns a `store$` instance. Luna `Store` is a subclass of the BehaviorSubject from rx. So it takes an intialstate at instantiation, and emits a stream of state objects that you can subscribe to. 
+
+the `store$.action$` is a behavior subject for the actions. The store internally subscribes to this stream and executes the reducers on the store state in response to events from this action stream. 
+
+The `store$.update$` is a replay subject for `{state, action}` bundle. It receives updated state/action bundle after the action has been applied to the store. This stream is used as a `post-action` hook for middlewares such as [luna-saga](https://github.com/escherpad/luna-saga). The reason this `update$` stream is useful is because the `store$` stream does not update when the state returned is identical to before. Therefore to get `{state, action}` updates for `noop` actions, we need this dedicated update stream.
+
+
 ## Wanna use Reactive-Extention (Rxjs) and redux in your project, but don't know how?
 
 Luna is the easiest way to get started. 
@@ -73,6 +111,7 @@ example here: [line in test file](https://github.com/escherpad/luna/commit/e0741
 
 and I personally find this very powerful!
 
+
 ## About this library and What's different about Luna (from redux)?
 
 - Luna is written using the reactive-extension, so that both the state of the store and the actions are streams.
@@ -90,21 +129,6 @@ To make getting started easy for you, Luna includes a simple class called `Store
 This way, script for each child store only need to know what it depends on itself. Components become truly composable.
 
 I currently do not use the `provideStore` provider for the reason given above.
-
-## Architecture Overview
-
-Luna store is a subclass of the BehaviorSubject from rx. It emits a stream of state objects that you can subscribe to. 
-
-the `store.action$` is a behavior subject for the actions. The store internally subscribes to this stream and executes the reducers on the store state in response to events from this action stream. 
-
-## Installing Luna
-
-run (I couldn't get the npm package name luna, so making do with this for now. If you think this is a bad idea let me know! I'm also open for better names!)
-
-```shell
-npm install luna@git+https://git@github.com/escherpad/luna.git 
-```
-
 
 ## Developing Luna
 

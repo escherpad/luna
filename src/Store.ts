@@ -1,13 +1,14 @@
 /** Created by ge on 12/4/15. */
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, ReplaySubject, Observable} from 'rxjs';
 import {passOrCombineReducers} from './util/combineReducers';
-import {Action, Thunk, Reducer, Hash} from "./interfaces";
+import {Action, Thunk, Reducer, Hash, StateActionBundle} from "./interfaces";
 
 export const INIT_STORE = '@@luna/INIT_STORE';
 export const INIT_STORE_ACTION = {type: INIT_STORE};
 
 export class Store<TState> extends BehaviorSubject<TState> {
     public rootReducer:Reducer;
+    public update$:ReplaySubject<StateActionBundle<TState>>;
     public action$:BehaviorSubject<Action>;
 
     constructor(rootReducer:Reducer | Hash<Reducer>,
@@ -18,12 +19,14 @@ export class Store<TState> extends BehaviorSubject<TState> {
 
         // action$ is a stream for action objects
         this.action$ = new BehaviorSubject<Action>(INIT_STORE_ACTION);
+        this.update$ = new ReplaySubject<StateActionBundle<TState>>(1);
         this.action$
             .subscribe(
                 (action) => {
                     var currentState:TState = this.getValue();
                     var state:TState = this.rootReducer(currentState, action);
-                    if (typeof state !== "undefined") this.next(state);
+                    this.next(state);
+                    this.update$.next({state: this.getValue(), action})
                 },
                 (error) => console.log('dispatcher$ Error: ', error.toString()),
                 () => console.log('dispatcher$ completed')

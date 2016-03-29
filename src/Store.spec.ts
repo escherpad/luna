@@ -35,9 +35,9 @@ describe("interfaces", function () {
         state = reducer(state, {type: "DEC"});
         expect(state).toBe(0);
     });
-    it("create store", function () {
-        var state:number = 0;
-        expect(state).toBe(0);
+    it("reducer should contain initial state", function () {
+        var state:number;
+        expect(state).toBeUndefined();
         state = reducer(state, {type: "INC"});
         expect(state).toBe(1);
         state = reducer(state, {type: "DEC"});
@@ -47,9 +47,17 @@ describe("interfaces", function () {
 
 import {Store} from "./index";
 describe("store", function () {
+    it("should contain action$ and update$ stream", function () {
+        var state:number = 10;
+        var store = new Store<number>(reducer, state);
+        // store should contain action$ and update$ stream.
+        expect(store.action$).toBeDefined();
+        expect(store.update$).toBeDefined();
+    });
     it("sync reducers should work", function () {
         var state:number = 10;
         var store = new Store<number>(reducer, state);
+
         store.subscribe(
             (state)=> {
                 console.log('spec state: ', state)
@@ -318,6 +326,7 @@ describe("store with hash type", function () {
         store.dispatch({type: "LOWERING"});
         store.dispatch({type: "INC"});
         store.dispatch({type: "DEC"});
+
 
         store.destroy();
     });
