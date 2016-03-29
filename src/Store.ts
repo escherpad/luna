@@ -31,12 +31,12 @@ export class Store<TState> extends BehaviorSubject<TState> {
 
     }
 
-    dispatch(action:Action|Thunk<TState>) {
+    dispatch(action:Action|Thunk) {
         var _action:Action,
-            _actionThunk:Thunk<TState>,
+            _actionThunk:Thunk,
             newAction:Action;
         if (typeof action === 'function') {
-            _actionThunk = action as Thunk<TState>;
+            _actionThunk = action as Thunk;
             newAction = <Action>_actionThunk.apply(this);
             if (typeof newAction !== 'undefined') {
                 return this.action$.next(newAction);
