@@ -4,6 +4,10 @@
 
 Luna is a reactive redux implementation based on the Reactive-Extension (Rxjs@v5.0-beta) and build with Typescript. Luna try to improve upon existing implementations of redux by providing out of the box support for async actions, ways to access child components of the root store as a stream and more. Luna drops verbatim compatibility with the original `redux` to give rise to a more coherent, reactive API.
 
+## Features
+1. **Luna `store$` object is reactive**. You can subscribe to it and use all of `rxjs`'s operators, such as `debounceTime`, `throttleTime`, `map`, `flatMap`, `buffer` etc.
+2. Luna `dispatch` function takes in both `thunk`s and `action`. As well as a batch(array) of thunks and actions, and update the store state in a single batch. Since dispatching and rendering in react are synchronous
+
 ## Installing Luna
 
 Just do `npm install luna` to install from npm. Or you can install from github:

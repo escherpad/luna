@@ -35,11 +35,11 @@
   },
   "author": "Ge Yang <yangge1987@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "es6-shim": "^0.35.0",
+  "peerDependencies": {
     "rxjs": "^5.0.0-alpha.14"
   },
   "devDependencies": {
+    "es6-shim": "^0.35.0",
     "awesome-typescript-loader": "^0.15.9",
     "browserify": "^12.0.1",
     "jasmine-core": "^2.4.1",
