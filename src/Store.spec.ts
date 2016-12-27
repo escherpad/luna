@@ -1,24 +1,25 @@
 /** Created by ge on 3/26/16. */
 
 /* so that this show up as a module */
+import {isAction} from "./util/isAction";
 export default {};
 /** Created by ge on 12/6/15. */
 import {Action, Hash, Reducer} from "./index";
 
 // the Stat interface need to extend Hash so that the index keys are available.
 
-let reducer = <Reducer>function (state:number = 0, action:Action, callback:(state:number)=>void):number {
+let reducer = <Reducer>function (state: number = 0, action: Action, callback: (state: number) => void): number {
     if (action.type === "INC") {
         return state + 1;
     } else if (action.type === "DEC") {
         return state - 1;
     } else if (action.type === "ASYNC_INC") {
-        setTimeout(()=> {
+        setTimeout(() => {
             callback(state + 1);
         }, 10);
         return undefined;
     } else if (action.type === "ASYNC_DEC") {
-        setTimeout(()=> {
+        setTimeout(() => {
             callback(state - 1);
         }, 10);
         return undefined;
@@ -29,14 +30,14 @@ let reducer = <Reducer>function (state:number = 0, action:Action, callback:(stat
 
 describe("interfaces", function () {
     it("Reducer can be a function", function () {
-        var state:number = undefined;
+        let state: number = undefined;
         state = reducer(state, {type: "INC"});
         expect(state).toBe(1);
         state = reducer(state, {type: "DEC"});
         expect(state).toBe(0);
     });
     it("reducer should contain initial state", function () {
-        var state:number;
+        let state: number;
         expect(state).toBeUndefined();
         state = reducer(state, {type: "INC"});
         expect(state).toBe(1);
@@ -48,21 +49,21 @@ describe("interfaces", function () {
 import {Store} from "./index";
 describe("store", function () {
     it("should contain action$ and update$ stream", function () {
-        var state:number = 10;
-        var store = new Store<number>(reducer, state);
+        let state: number = 10;
+        let store = new Store<number>(reducer, state);
         // store should contain action$ and update$ stream.
         expect(store.action$).toBeDefined();
         expect(store.update$).toBeDefined();
     });
     it("sync reducers should work", function () {
-        var state:number = 10;
-        var store = new Store<number>(reducer, state);
+        let state: number = 10;
+        let store = new Store<number>(reducer, state);
 
         store.subscribe(
-            (state)=> {
+            (state) => {
                 console.log('spec state: ', state)
             },
-            error=> console.log('error ', error),
+            error => console.log('error ', error),
             () => console.log('completed.')
         );
         store.dispatch({type: "INC"});
@@ -75,55 +76,66 @@ describe("store", function () {
 describe("dispatch function", function () {
 
     it("support action creator", function () {
-        var state:number = 30;
-        var store = new Store<number>(reducer, state);
+        let state: number = 30;
+        let store = new Store<number>(reducer, state);
 
-        function increase():Action {
+        function increase(): Action {
             return {
                 type: "INC"
             };
         }
 
         store.subscribe(
-            (state)=> {
+            (state) => {
                 console.log('spec state: ', state)
             },
-            error=> console.log('error ', error),
+            error => console.log('error ', error),
             () => console.log('completed.')
         );
         store.dispatch(increase());
         store.dispatch({type: "DEC"});
         store.destroy();
     });
-    it("support passing in thunk", function () {
-        var state:number = 40;
-        var store = new Store<number>(reducer, state);
+    it("support thunk; properly handle null or undefined actions from thunk.", function () {
+        let state: number = 40;
+        let store = new Store<number>(reducer, state);
 
-        function increase():Action {
+        function increase(): Action {
             return {
                 type: "INC"
             };
         }
 
         store.subscribe(
-            (state)=> {
+            (state) => {
                 console.log('spec state: ', state)
             },
-            error=> console.log('error ', error),
+            error => console.log('error ', error),
             () => console.log('completed.')
         );
+
+        store.update$.subscribe(
+            ({state, action}) => {
+                if (!isAction(action)) throw Error("ill-formed action is allowed to get dispatched");
+            }
+        );
+        // null or undefined results from thunk should not be passed through by dispatch
+        store.dispatch(() => null);
+        store.dispatch(() => undefined);
+
+        // dispatching typical thunks
         store.dispatch(increase);
         store.dispatch({type: "DEC"});
         store.destroy();
     });
-    it("support passing in thunk, and thunk have access to dispatch", function () {
-        var state:number = 40;
-        var store = new Store<number>(reducer, state);
+    it("thunk have access to dispatch", function () {
+        let state: number = 40;
+        let store = new Store<number>(reducer, state);
 
-        function increase():void {
-            var _store:Store<number> = this;
-            setTimeout(function ():void {
-                var action:Action = {
+        function increase(): void {
+            let _store: Store<number> = this;
+            setTimeout(function (): void {
+                let action: Action = {
                     type: "INC"
                 };
                 _store.dispatch(action)
@@ -131,15 +143,17 @@ describe("dispatch function", function () {
         }
 
         store.subscribe(
-            (state)=> {
+            (state) => {
                 console.log('spec state: ', state)
             },
-            error=> console.log('error ', error),
+            error => console.log('error ', error),
             () => console.log('completed.')
         );
         store.dispatch(increase);
         store.dispatch({type: "DEC"});
-        store.destroy();
+        setTimeout(() => {
+            store.destroy();
+        }, 210)
     })
 
 });
@@ -148,7 +162,7 @@ describe("store with hash type", function () {
         interface TState extends Hash<number> {
         }
 
-        let reducer = <Reducer>function <Number>(state:number = 0, action:Action):number {
+        let reducer = <Reducer>function <Number>(state: number = 0, action: Action): number {
             if (action.type === "INC") {
                 return state + 1;
             } else if (action.type === "DEC") {
@@ -157,16 +171,16 @@ describe("store with hash type", function () {
                 return state;
             }
         };
-        var rootReducer:Hash<Reducer> = {
+        let rootReducer: Hash<Reducer> = {
             counter: reducer
         };
 
-        var store = new Store<TState>(rootReducer);
+        let store = new Store<TState>(rootReducer);
 
-        function increase():void {
-            var _store:Store<TState> = this;
-            setTimeout(function ():void {
-                var action:Action = {
+        function increase(): void {
+            let _store: Store<TState> = this;
+            setTimeout(function (): void {
+                let action: Action = {
                     type: "INC"
                 };
                 _store.dispatch(action);
@@ -182,16 +196,18 @@ describe("store with hash type", function () {
         );
         store.dispatch(increase);
         store.dispatch({type: "DEC"});
-        store.destroy();
+        setTimeout(() => {
+            store.destroy();
+        }, 210)
     });
     it("can take initial value", function () {
         interface TState extends Hash<number> {
         }
-        var state:TState = {
+        let state: TState = {
             counter: 40
         };
 
-        let reducer = <Reducer>function <Number>(state:number = 0, action:Action):number {
+        let reducer = <Reducer>function <Number>(state: number = 0, action: Action): number {
             if (action.type === "INC") {
                 return state + 1;
             } else if (action.type === "DEC") {
@@ -200,16 +216,16 @@ describe("store with hash type", function () {
                 return state;
             }
         };
-        var rootReducer:Hash<Reducer> = {
+        let rootReducer: Hash<Reducer> = {
             counter: reducer
         };
 
-        var store = new Store<TState>(rootReducer, state);
+        let store = new Store<TState>(rootReducer, state);
 
-        function increase():void {
-            var _store:Store<TState> = this;
-            setTimeout(function ():void {
-                var action:Action = {
+        function increase(): void {
+            let _store: Store<TState> = this;
+            setTimeout(function (): void {
+                let action: Action = {
                     type: "INC"
                 };
                 _store.dispatch(action);
@@ -225,19 +241,21 @@ describe("store with hash type", function () {
         );
         store.dispatch(increase);
         store.dispatch({type: "DEC"});
-        store.destroy();
+        setTimeout(() => {
+            store.destroy();
+        }, 210);
     });
     it("accept reducers of different types", function () {
         interface TState {
             counter: number;
             name: string;
         }
-        var state:TState = {
+        let state: TState = {
             counter: 40,
             name: 'Captain Kirk'
         };
 
-        let counterReducer = <Reducer>function <Number>(state:number, action:Action):number {
+        let counterReducer = <Reducer>function <Number>(state: number, action: Action): number {
             if (action.type === "INC") {
                 return state + 1;
             } else if (action.type === "DEC") {
@@ -246,7 +264,7 @@ describe("store with hash type", function () {
                 return state;
             }
         };
-        let stringReducer = <Reducer>function <String>(state:string, action:Action):string {
+        let stringReducer = <Reducer>function <String>(state: string, action: Action): string {
             if (action.type === "CAPITALIZE") {
                 return state.toUpperCase();
             } else if (action.type === "LOWERING") {
@@ -255,18 +273,18 @@ describe("store with hash type", function () {
                 return state;
             }
         };
-        var rootReducer:Hash<Reducer> = {
+        let rootReducer: Hash<Reducer> = {
             counter: counterReducer,
             name: stringReducer
         };
 
-        var store = new Store<TState>(rootReducer, state);
+        let store = new Store<TState>(rootReducer, state);
 
         store.subscribe(
-            (state)=> {
+            (state) => {
                 console.log('spec state: ', state)
             },
-            error=> console.log('error ', error),
+            error => console.log('error ', error),
             () => console.log('completed.')
         );
         store.dispatch({type: "CAPITALIZE"});
@@ -279,12 +297,12 @@ describe("store with hash type", function () {
             counter: number;
             name: string;
         }
-        var state:TState = {
+        let state: TState = {
             counter: 40,
             name: 'Captain Kirk'
         };
 
-        let counterReducer = <Reducer>function <Number>(state:number, action:Action):number {
+        let counterReducer = <Reducer>function <Number>(state: number, action: Action): number {
             if (action.type === "INC") {
                 return state + 1;
             } else if (action.type === "DEC") {
@@ -293,7 +311,7 @@ describe("store with hash type", function () {
                 return state;
             }
         };
-        let stringReducer = <Reducer>function <String>(state:string, action:Action):string {
+        let stringReducer = <Reducer>function <String>(state: string, action: Action): string {
             if (action.type === "CAPITALIZE") {
                 return state.toUpperCase();
             } else if (action.type === "LOWERING") {
@@ -302,12 +320,12 @@ describe("store with hash type", function () {
                 return state;
             }
         };
-        var rootReducer:Hash<Reducer> = {
+        let rootReducer: Hash<Reducer> = {
             counter: counterReducer,
             name: stringReducer
         };
 
-        var store = new Store<TState>(rootReducer, state);
+        let store = new Store<TState>(rootReducer, state);
 
         store.select('name').subscribe(
             (state) => {
@@ -320,7 +338,7 @@ describe("store with hash type", function () {
         // mock persistent storage example
         store
             .select('counter')
-            .subscribe((count:number):void => console.log('counter saving event: ', count));
+            .subscribe((count: number): void => console.log('counter saving event: ', count));
 
         store.dispatch({type: "CAPITALIZE"});
         store.dispatch({type: "LOWERING"});

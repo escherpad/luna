@@ -37,7 +37,7 @@ export class Store<TState> extends BehaviorSubject<TState> {
     }
 
     dispatch(action: Action|Thunk) {
-        var _action: Action,
+        let _action: Action,
             _actionThunk: Thunk,
             newAction: Action;
         if (typeof action === 'function') {
@@ -45,7 +45,7 @@ export class Store<TState> extends BehaviorSubject<TState> {
             newAction = <Action>_actionThunk.apply(this);
             if (isAction(newAction)) return this.action$.next(newAction);
         } else if (!isAction(action)) {
-            throw Error("action object ill defined: " + _action);
+            console.error("action object ill-defined: ", action, "will not pass in.");
         } else {
             _action = action as Action;
             this.action$.next(_action);
