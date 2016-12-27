@@ -41,8 +41,8 @@ var Store = (function (_super) {
             if (isAction_1.isAction(newAction))
                 return this.action$.next(newAction);
         }
-        else if (!action) {
-            throw Error("Plain object action is undefined: action=" + _action);
+        else if (!isAction_1.isAction(action)) {
+            console.error("action object ill-defined: ", action, "will not pass in.");
         }
         else {
             _action = action;
