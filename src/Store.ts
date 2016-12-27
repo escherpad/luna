@@ -44,8 +44,8 @@ export class Store<TState> extends BehaviorSubject<TState> {
             _actionThunk = action as Thunk;
             newAction = <Action>_actionThunk.apply(this);
             if (isAction(newAction)) return this.action$.next(newAction);
-        } else if (!action) {
-            throw Error("Plain object action is undefined: action=" + _action);
+        } else if (!isAction(action)) {
+            throw Error("action object ill defined: " + _action);
         } else {
             _action = action as Action;
             this.action$.next(_action);

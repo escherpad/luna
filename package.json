@@ -29,10 +29,10 @@
     "test": "karma start",
     "clean": "rimraf dist",
     "build:src": "tsc",
-    "build": "npm run clean && npm run build:src",
-    "publish:patch": "npm run build && git add . && git ci -m \"BUILD\" && npm version patch && npm publish && git push",
+    "clean+build": "npm run clean && npm run build:src",
+    "publish:patch": "npm run clean+build && git add . && git ci -m \"BUILD\" && npm version patch && npm publish && git push",
     "postinstall": "npm dedupe",
-    "prepublish": "npm run build"
+    "prepublish": "npm run clean+build"
   },
   "author": "Ge Yang <yangge1987@gmail.com>",
   "license": "MIT",
