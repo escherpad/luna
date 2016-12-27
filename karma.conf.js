@@ -12,6 +12,11 @@ module.exports = function (config) {
             'src/index.spec.ts' // just use index to import everything
             //'src/*.spec.ts'
         ],
+        // note: necessary for karma script to execute properly in Chrome.
+        // Otherwise mime type is recognized as video, result in an error message.
+        mime: {
+            'text/x-typescript': ['ts','tsx']
+        },
         exclude: [],
         preprocessors: {
             "**/*.spec.ts": ["webpack", "sourcemap"]

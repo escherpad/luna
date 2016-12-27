@@ -23,8 +23,8 @@ export class Store<TState> extends BehaviorSubject<TState> {
         this.action$
             .subscribe(
                 (action) => {
-                    var currentState:TState = this.getValue();
-                    var state:TState = this.rootReducer(currentState, action);
+                    let currentState:TState = this.getValue();
+                    let state: TState = this.rootReducer(currentState, action);
                     this.next(state);
                     this.update$.next({state: this.getValue(), action})
                 },
