@@ -2,17 +2,18 @@
 import {BehaviorSubject, Subject, Observable} from 'rxjs';
 import {passOrCombineReducers} from './util/combineReducers';
 import {Action, Thunk, Reducer, Hash, StateActionBundle} from "./interfaces";
+import {isAction} from "./util/isAction";
 
 export const INIT_STORE = '@@luna/INIT_STORE';
 export const INIT_STORE_ACTION = {type: INIT_STORE};
 
 export class Store<TState> extends BehaviorSubject<TState> {
-    public rootReducer:Reducer;
-    public update$:Subject<StateActionBundle<TState>>;
-    public action$:Subject<Action>;
+    public rootReducer: Reducer;
+    public update$: Subject<StateActionBundle<TState>>;
+    public action$: Subject<Action>;
 
-    constructor(rootReducer:Reducer | Hash<Reducer>,
-                initialState?:TState) {
+    constructor(rootReducer: Reducer | Hash<Reducer>,
+                initialState?: TState) {
         // this is a stream for the states of the store, call BehaviorSubject constructor
         super(passOrCombineReducers(rootReducer)(initialState, INIT_STORE_ACTION));
         this.rootReducer = passOrCombineReducers(rootReducer);
@@ -23,7 +24,7 @@ export class Store<TState> extends BehaviorSubject<TState> {
         this.action$
             .subscribe(
                 (action) => {
-                    let currentState:TState = this.getValue();
+                    let currentState: TState = this.getValue();
                     let state: TState = this.rootReducer(currentState, action);
                     this.next(state);
                     this.update$.next({state: this.getValue(), action})
@@ -35,16 +36,14 @@ export class Store<TState> extends BehaviorSubject<TState> {
         this.action$.next(INIT_STORE_ACTION);
     }
 
-    dispatch(action:Action|Thunk) {
-        var _action:Action,
-            _actionThunk:Thunk,
-            newAction:Action;
+    dispatch(action: Action|Thunk) {
+        var _action: Action,
+            _actionThunk: Thunk,
+            newAction: Action;
         if (typeof action === 'function') {
             _actionThunk = action as Thunk;
             newAction = <Action>_actionThunk.apply(this);
-            if (typeof newAction !== 'undefined') {
-                return this.action$.next(newAction);
-            }
+            if (isAction(newAction)) return this.action$.next(newAction);
         } else if (!action) {
             throw Error("Plain object action is undefined: action=" + _action);
         } else {
@@ -54,20 +53,20 @@ export class Store<TState> extends BehaviorSubject<TState> {
     }
 
     // this method is just a wrapper function to make it compatible with redux convention.
-    getState():TState {
+    getState(): TState {
         return this.getValue();
     }
 
-    select <TRState>(key:string):Observable<TRState> {
+    select <TRState>(key: string): Observable<TRState> {
         return this
-            .map((state:any) => {
-                var rState:TRState = state[key] as TRState;
+            .map((state: any) => {
+                var rState: TRState = state[key] as TRState;
                 return rState;
             })
             .distinctUntilChanged();
     }
 
-    destroy = ()=> {
+    destroy = () => {
         this.action$.complete();
         this.complete();
     }
