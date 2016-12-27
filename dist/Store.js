@@ -7,6 +7,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 /** Created by ge on 12/4/15. */
 var rxjs_1 = require('rxjs');
 var combineReducers_1 = require('./util/combineReducers');
+var isAction_1 = require("./util/isAction");
 exports.INIT_STORE = '@@luna/INIT_STORE';
 exports.INIT_STORE_ACTION = { type: exports.INIT_STORE };
 var Store = (function (_super) {
@@ -37,9 +38,8 @@ var Store = (function (_super) {
         if (typeof action === 'function') {
             _actionThunk = action;
             newAction = _actionThunk.apply(this);
-            if (typeof newAction !== 'undefined') {
+            if (isAction_1.isAction(newAction))
                 return this.action$.next(newAction);
-            }
         }
         else if (!action) {
             throw Error("Plain object action is undefined: action=" + _action);
