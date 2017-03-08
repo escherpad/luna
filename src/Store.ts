@@ -36,6 +36,7 @@ export class Store<TState> extends BehaviorSubject<TState> {
         this.action$.next(INIT_STORE_ACTION);
     }
 
+    // todo: autobind this
     dispatch(action: Action|Thunk) {
         let _action: Action,
             _actionThunk: Thunk,
