@@ -9,6 +9,7 @@ export const INIT_STORE_ACTION = {type: INIT_STORE};
 
 export class Store<TState> extends BehaviorSubject<TState> {
     public rootReducer: Reducer;
+    public dispatch: (action: Action|Thunk) => void;
     public update$: Subject<StateActionBundle<TState>>;
     public action$: Subject<Action>;
 
