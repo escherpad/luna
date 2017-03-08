@@ -16,6 +16,7 @@ export class Store<TState> extends BehaviorSubject<TState> {
                 initialState?: TState) {
         // this is a stream for the states of the store, call BehaviorSubject constructor
         super(passOrCombineReducers(rootReducer)(initialState, INIT_STORE_ACTION));
+        this.dispatch = this._dispatch.bind(this);
         this.rootReducer = passOrCombineReducers(rootReducer);
 
         // action$ is a stream for action objects
@@ -36,8 +37,7 @@ export class Store<TState> extends BehaviorSubject<TState> {
         this.action$.next(INIT_STORE_ACTION);
     }
 
-    // todo: autobind this
-    dispatch(action: Action|Thunk) {
+    _dispatch(action: Action|Thunk) {
         let _action: Action,
             _actionThunk: Thunk,
             newAction: Action;
