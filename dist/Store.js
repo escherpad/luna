@@ -20,6 +20,7 @@ var Store = (function (_super) {
             _this.action$.complete();
             _this.complete();
         };
+        this.dispatch = this._dispatch.bind(this);
         this.rootReducer = combineReducers_1.passOrCombineReducers(rootReducer);
         // action$ is a stream for action objects
         this.action$ = new rxjs_1.Subject();
@@ -33,7 +34,7 @@ var Store = (function (_super) {
         }, function (error) { return console.log('dispatcher$ Error: ', error.toString()); }, function () { return console.log('dispatcher$ completed'); });
         this.action$.next(exports.INIT_STORE_ACTION);
     }
-    Store.prototype.dispatch = function (action) {
+    Store.prototype._dispatch = function (action) {
         var _action, _actionThunk, newAction;
         if (typeof action === 'function') {
             _actionThunk = action;
