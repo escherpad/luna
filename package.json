@@ -32,7 +32,6 @@
     "clean+build": "npm run clean && npm run build:src",
     "publish:patch": "npm run clean+build && git add . && git ci -m \"BUILD\" && npm version patch && npm publish && git push",
     "publish:minor": "npm run clean+build && git add . && git ci -m \"BUILD\" && npm version minor && npm publish && git push",
-    "postinstall": "npm dedupe",
     "prepublish": "npm run clean+build"
   },
   "author": "Ge Yang <yangge1987@gmail.com>",
