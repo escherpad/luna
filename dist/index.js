@@ -1,5 +1,5 @@
 "use strict";
-/** Created by ge on 12/4/15. */
+Object.defineProperty(exports, "__esModule", { value: true });
 var combineReducers_1 = require("./util/combineReducers");
 exports.combineReducers = combineReducers_1.combineReducers;
 exports.passOrCombineReducers = combineReducers_1.passOrCombineReducers;

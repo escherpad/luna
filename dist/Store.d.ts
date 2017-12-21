@@ -1,7 +1,7 @@
 /** Created by ge on 12/4/15. */
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { Action, Thunk, Reducer, Hash, StateActionBundle } from "./interfaces";
-export declare const INIT_STORE: string;
+export declare const INIT_STORE = "@@luna/INIT_STORE";
 export declare const INIT_STORE_ACTION: {
     type: string;
 };

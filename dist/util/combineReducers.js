@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 // helper function
 function pickReducers(reducers) {
     var initialResult = {};
