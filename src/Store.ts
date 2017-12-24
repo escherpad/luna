@@ -27,9 +27,9 @@ export class Store<TState> extends BehaviorSubject<TState> {
             .subscribe(
                 (action) => {
                     let currentState: TState = this.getValue();
-                    let state: TState = this.rootReducer(currentState, action);
-                    this.next(state);
-                    this.update$.next({state: this.getValue(), action})
+                    let newState: TState = this.rootReducer(currentState, action);
+                    this.next(newState);
+                    this.update$.next({state: newState, action})
                 },
                 (error) => console.log('dispatcher$ Error: ', error.toString()),
                 () => console.log('dispatcher$ completed')
