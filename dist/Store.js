@@ -34,9 +34,9 @@ var Store = /** @class */ (function (_super) {
         _this.action$
             .subscribe(function (action) {
             var currentState = _this.getValue();
-            var state = _this.rootReducer(currentState, action);
-            _this.next(state);
-            _this.update$.next({ state: _this.getValue(), action: action });
+            var newState = _this.rootReducer(currentState, action);
+            _this.next(newState);
+            _this.update$.next({ state: newState, action: action });
         }, function (error) { return console.log('dispatcher$ Error: ', error.toString()); }, function () { return console.log('dispatcher$ completed'); });
         _this.action$.next(exports.INIT_STORE_ACTION);
         return _this;
